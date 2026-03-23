@@ -1,0 +1,3 @@
+[submodule "engine/py-kinematics"]
+	path = engine/py-kinematics
+	url = git@github.com:poconoco/py-kinematics.git
