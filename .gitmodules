@@ -1,3 +1,6 @@
-[submodule "engine/py-kinematics"]
-	path = engine/py-kinematics
+[submodule "engine/bt_remote"]
+	path = engine/bt_remote
+	url = git@github.com:poconoco/bt-remote.git
+[submodule "engine/py_kinematics"]
+	path = engine/py_kinematics
 	url = git@github.com:poconoco/py-kinematics.git
