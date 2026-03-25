@@ -188,3 +188,23 @@ legs:
         rest_angle: 90
         multiplier: 1
 
+body:
+  leg_mounts:
+    left_rear:
+      x_offset: -34.542
+      y_offset: -34.542
+    right_rear:
+      x_offset: 34.542
+      y_offset: -34.542
+    left_middle:
+      x_offset: -34.542
+      y_offset: 34.542
+    right_middle:
+      x_offset: 34.542
+      y_offset: 34.542
+    left_front:
+      x_offset: -38.70
+      y_offset: 162.121
+    right_front:
+      x_offset: 38.70
+      y_offset: 162.121
