@@ -10,6 +10,9 @@ tail:
 legs:
   left_rear:
     coxa:
+      angle_for_perpendicular: 0
+      h_offset: 50
+      v_offset: 30
       servo:
         i2c_address: 0x40
         channel: 1
@@ -18,6 +21,8 @@ legs:
         rest_angle: 90
         multiplier: -1
     femur:
+      angle_for_horizontal: 0
+      length: 69.2
       servo:
         i2c_address: 0x40
         channel: 7
@@ -26,6 +31,9 @@ legs:
         rest_angle: 90
         multiplier: -1
     tibia:
+      angle_for_femur_parallel: 0
+      angle_phisical_delta: -15.11
+      length: 103.58
       servo:
         i2c_address: 0x41
         channel: 0
@@ -33,6 +41,8 @@ legs:
         max_pulse: 2480
         rest_angle: 90
         multiplier: 1
+    speed: 250
+    acceleration: 200
 
   right_rear:
     coxa:
