@@ -11,8 +11,8 @@ legs:
   left_rear:
     coxa:
       angle_for_perpendicular: 0
-      h_offset: 50
-      v_offset: 30
+      h_offset: 50.1
+      v_offset: 0
       servo:
         i2c_address: 0x40
         channel: 1
@@ -32,8 +32,8 @@ legs:
         multiplier: -1
     tibia:
       angle_for_femur_parallel: 0
-      angle_phisical_delta: -15.11
-      length: 103.58
+      angle_phisical_delta: -15.2
+      length: 103.607
       servo:
         i2c_address: 0x41
         channel: 0
