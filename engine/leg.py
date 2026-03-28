@@ -60,6 +60,8 @@ class Leg3DOF:
 
         coxa_angle, femur_angle, tibia_angle = self.ik.get_angles(smoothed_point)
 
+        print(f'C: {coxa_angle}, F:{femur_angle}, T:{tibia_angle}')
+
         self._set_servo_angle(self.coxa_servo, coxa_angle)
         self._set_servo_angle(self.femur_servo, femur_angle)
         self._set_servo_angle(self.tibia_servo, tibia_angle)
