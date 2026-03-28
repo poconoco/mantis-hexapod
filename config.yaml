@@ -41,19 +41,25 @@ legs:
         max_pulse: 2480
         rest_angle: 90
         multiplier: 1
+    mirror_x: true
     speed: 250
     acceleration: 200
 
   right_rear:
     coxa:
+      angle_for_perpendicular: 0
+      h_offset: 50.1
+      v_offset: 0
       servo:
         i2c_address: 0x40
         channel: 2
         min_pulse: 500
         max_pulse: 2630
         rest_angle: 90
-        multiplier: 1
+        multiplier: -1
     femur:
+      angle_for_horizontal: 0
+      length: 69.2
       servo:
         i2c_address: 0x40
         channel: 8
@@ -62,6 +68,9 @@ legs:
         rest_angle: 90
         multiplier: 1
     tibia:
+      angle_for_femur_parallel: 90
+      angle_phisical_delta: 15.2
+      length: 103.607
       servo:
         i2c_address: 0x41
         channel: 1
@@ -69,17 +78,25 @@ legs:
         max_pulse: 2460
         rest_angle: 90
         multiplier: -1
+    mirror_x: false
+    speed: 250
+    acceleration: 200
 
   left_middle:
     coxa:
+      angle_for_perpendicular: 0
+      h_offset: 50.1
+      v_offset: 0
       servo:
         i2c_address: 0x40
         channel: 3
         min_pulse: 390
         max_pulse: 2480
         rest_angle: 90
-        multiplier: -1
+        multiplier: 1
     femur:
+      angle_for_horizontal: 0
+      length: 69.2
       servo:
         i2c_address: 0x40
         channel: 9
@@ -88,6 +105,9 @@ legs:
         rest_angle: 90
         multiplier: 1
     tibia:
+      angle_for_femur_parallel: 90
+      angle_phisical_delta: 15.2
+      length: 103.607
       servo:
         i2c_address: 0x41
         channel: 2
@@ -95,17 +115,25 @@ legs:
         max_pulse: 2450
         rest_angle: 90
         multiplier: -1
+    mirror_x: true
+    speed: 250
+    acceleration: 200
 
   right_middle:
     coxa:
+      angle_for_perpendicular: 0
+      h_offset: 50.1
+      v_offset: 0
       servo:
         i2c_address: 0x40
         channel: 4
         min_pulse: 480
         max_pulse: 2630
         rest_angle: 90
-        multiplier: 1
+        multiplier: -1
     femur:
+      angle_for_horizontal: 0
+      length: 69.2
       servo:
         i2c_address: 0x40
         channel: 10
@@ -114,6 +142,9 @@ legs:
         rest_angle: 90
         multiplier: -1
     tibia:
+      angle_for_femur_parallel: 90
+      angle_phisical_delta: 15.2
+      length: 103.607
       servo:
         i2c_address: 0x41
         channel: 3
@@ -121,6 +152,9 @@ legs:
         max_pulse: 2390
         rest_angle: 90
         multiplier: 1
+    mirror_x: false
+    speed: 250
+    acceleration: 200
 
   left_front:
     coxa:

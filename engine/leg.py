@@ -30,6 +30,11 @@ class Leg3DOF:
         #self.ik.femur_multiplier = leg_config['femur'].get('multiplier', 1.0)
         #self.ik.tibia_multiplier = leg_config['tibia'].get('multiplier', 1.0)
 
+        self.mirror_x = leg_config.get('mirror_x', False)
+
+        if self.mirror_x:
+            initial_point.x *= -1
+
         self.smoother = Smoother3D(
             initial_point,
             leg_config['speed'],
@@ -41,15 +46,14 @@ class Leg3DOF:
         self.femur_servo = Servo(pca_pool, leg_config['femur']['servo'])
         self.tibia_servo = Servo(pca_pool, leg_config['tibia']['servo'])
 
-        #self.coxa_servo = self._get_servo(leg_config['coxa']['servo'], pca)
-        #self.femur_servo = self._get_servo(leg_config['femur']['servo'], pca)
-        #self.tibia_servo = self._get_servo(leg_config['tibia']['servo'], pca)
-
     def tick(self, reach_to: Point3D):
         now = time.time()
         if self.prev_tick is None:
             self.prev_tick = now
             return
+
+        if self.mirror_x:
+            reach_to.x *= -1
 
         self.smoother.set_target(reach_to)
         self.smoother.tick(now - self.prev_tick)

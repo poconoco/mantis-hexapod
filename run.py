@@ -18,13 +18,16 @@ def main():
     #servo = Servo(pca_pool, config['legs']['left_rear']['coxa']['servo'])
     #servo.move(0)
 
+    left_point = Point3D(-110, 40, -50)
+    right_point = Point3D(110, 40, -50)
 
+    left_leg = Leg3DOF(config['legs']['left_middle'], pca_pool, left_point)
+    right_leg = Leg3DOF(config['legs']['right_middle'], pca_pool, left_point)
 
-    left_center_point = Point3D(50, -20, -80)
-    left_rear_leg = Leg3DOF(config['legs']['left_rear'], pca_pool, left_center_point)
-
-    left_rear_leg.tick(left_center_point + Point3D(0, 0, 0))
-    left_rear_leg.tick(left_center_point + Point3D(0, 0, 0))
+    left_leg.tick(left_point + Point3D(0, 0, 0))
+    left_leg.tick(left_point + Point3D(0, 0, 0))
+    right_leg.tick(left_point + Point3D(0, 0, 0))
+    right_leg.tick(left_point + Point3D(0, 0, 0))
 
     #print("\nPress Ctrl+C key to exit...")
     #try:
