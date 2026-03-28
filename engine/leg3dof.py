@@ -20,11 +20,11 @@ class Leg3DOF:
         self.ik.coxa_angle_for_perpendicular = leg_config['coxa']['angle_for_perpendicular']
         self.ik.femur_angle_for_horizontal = leg_config['femur']['angle_for_horizontal']
 
-        # angle_phisical_delta is used for femur that are L-shaped, and it's easier to
+        # angle_physical_delta is used for femur that are L-shaped, and it's easier to
         # calibrate angles for the straight part of the tibia, but the real tibia is diagonal
         # between the ends of L
         self.ik.tibia_angle_for_femur_parallel = leg_config['tibia']['angle_for_femur_parallel'] + \
-            leg_config['tibia'].get('angle_phisical_delta', 0.0) * leg_config['tibia'].get('multiplier', 1.0)
+            leg_config['tibia'].get('angle_physical_delta', 0.0) * leg_config['tibia'].get('multiplier', 1.0)
 
         #self.ik.coxa_multiplier = leg_config['coxa'].get('multiplier', 1.0)
         #self.ik.femur_multiplier = leg_config['femur'].get('multiplier', 1.0)

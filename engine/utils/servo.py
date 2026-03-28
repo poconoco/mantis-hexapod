@@ -12,11 +12,7 @@ class Servo:
 
     def move(self, angle):
         servo_angle = self.rest_angle + (self.angle_physical_delta + angle) * self.multiplier
-        self.servo.angle = clamp(servo_angle, 0, 180)
+        self.servo.angle = min(max(servo_angle, 0), 180)
 
     def detach(self):
         self.servo.angle = None
-
-
-def clamp(value, min_value, max_value):
-    return min(max(value, min_value), max_value)

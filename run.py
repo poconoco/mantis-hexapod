@@ -5,7 +5,8 @@ import board
 from engine.py_kinematics.point3d import Point3D
 from engine.utils.pca_pool import PcaPool
 from engine.utils.servo import Servo
-from engine.leg import Leg3DOF
+from engine.leg3dof import Leg3DOF
+from engine.leg4dof import Leg4DOF
 
 def main():
 
@@ -15,17 +16,17 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    #servo = Servo(pca_pool, config['legs']['left_rear']['coxa']['servo'])
+    #servo = Servo(pca_pool, config['legs']['right_front']['coxa']['servo2'])
     #servo.move(0)
 
-    left_point = Point3D(-110, 40, -50)
-    right_point = Point3D(110, 40, -50)
+    left_point = Point3D(-70, 0, -100)
+    right_point = Point3D(70, 0, -100)
 
-    left_leg = Leg3DOF(config['legs']['left_middle'], pca_pool, left_point)
-    right_leg = Leg3DOF(config['legs']['right_middle'], pca_pool, left_point)
+    left_leg = Leg4DOF(config['legs']['left_front'], pca_pool, left_point)
+    right_leg = Leg4DOF(config['legs']['right_front'], pca_pool, left_point)
 
-    left_leg.tick(left_point + Point3D(0, 0, 0))
-    left_leg.tick(left_point + Point3D(0, 0, 0))
+#    left_leg.tick(left_point + Point3D(0, 0, 0))
+#    left_leg.tick(left_point + Point3D(0, 0, 0))
     right_leg.tick(left_point + Point3D(0, 0, 0))
     right_leg.tick(left_point + Point3D(0, 0, 0))
 
