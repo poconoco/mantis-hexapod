@@ -162,8 +162,8 @@ legs:
       h_offset: 50.1
       v_offset: 0
       angle2_for_horizontal: 90
-      angle2_physical_delta: 30  #TODO: measure in CAD
-      length2: 69  #TODO: measure in CAD
+      angle2_physical_delta: 33.3
+      length2: 69.824
       servo1:
         i2c_address: 0x40
         channel: 5
@@ -209,8 +209,8 @@ legs:
       h_offset: 50.1
       v_offset: 0
       angle2_for_horizontal: 90
-      angle2_physical_delta: 30  #TODO: measure in CAD
-      length2: 69  #TODO: measure in CAD
+      angle2_physical_delta: 33.3
+      length2: 69.824
       servo1:
         i2c_address: 0x40
         channel: 6
