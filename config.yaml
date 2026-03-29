@@ -158,11 +158,11 @@ legs:
 
   left_front:
     coxa:
-      angle1_for_perpendicular: 90
+      angle1_for_perpendicular: 0
       h_offset: 50.1
       v_offset: 0
       angle2_for_horizontal: 90
-      angle2_physical_delta: -30  #TODO: measure in CAD
+      angle2_physical_delta: 30  #TODO: measure in CAD
       length2: 69  #TODO: measure in CAD
       servo1:
         i2c_address: 0x40
@@ -198,7 +198,7 @@ legs:
         min_pulse: 500
         max_pulse: 2430
         rest_angle: 90
-        multiplier: 1
+        multiplier: -1
     mirror_x: true
     speed: 250
     acceleration: 200
@@ -209,7 +209,7 @@ legs:
       h_offset: 50.1
       v_offset: 0
       angle2_for_horizontal: 90
-      angle2_physical_delta: -30  #TODO: measure in CAD
+      angle2_physical_delta: 30  #TODO: measure in CAD
       length2: 69  #TODO: measure in CAD
       servo1:
         i2c_address: 0x40
@@ -245,7 +245,7 @@ legs:
         min_pulse: 550
         max_pulse: 2520
         rest_angle: 90
-        multiplier: 1
+        multiplier: -1
     mirror_x: false
     speed: 250
     acceleration: 200

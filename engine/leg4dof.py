@@ -20,11 +20,10 @@ class Leg4DOF:
 
         coxa2_angle_physical_delta = leg_config['coxa'].get('angle2_physical_delta', 0.0)
         self.ik.coxa1_for_perpendicular = leg_config['coxa']['angle1_for_perpendicular']
-        self.ik.coxa2_angle_for_horizontal = leg_config['coxa']['angle2_for_horizontal'] + \
-            coxa2_angle_physical_delta
+        self.ik.coxa2_angle_for_horizontal = leg_config['coxa']['angle2_for_horizontal'] - coxa2_angle_physical_delta
 
-        self.ik.coxa2_min_angle = 0 + coxa2_angle_physical_delta
-        self.ik.coxa2_max_angle = 180 + coxa2_angle_physical_delta
+        self.ik.coxa2_min_angle = -90 + coxa2_angle_physical_delta
+        self.ik.coxa2_max_angle = 90 + coxa2_angle_physical_delta
 
         self.ik.femur_angle_for_coxa2_parallel = leg_config['femur']['angle_for_coxa2_parallel']
 
@@ -44,7 +43,7 @@ class Leg4DOF:
         )
 
         self.coxa1_servo = Servo(pca_pool, leg_config['coxa']['servo1'])
-        self.coxa2_servo = Servo(pca_pool, leg_config['coxa']['servo1'])
+        self.coxa2_servo = Servo(pca_pool, leg_config['coxa']['servo2'])
         self.femur_servo = Servo(pca_pool, leg_config['femur']['servo'])
         self.tibia_servo = Servo(pca_pool, leg_config['tibia']['servo'])
 
@@ -66,12 +65,10 @@ class Leg4DOF:
 
         coxa1_angle, coxa2_angle, femur_angle, tibia_angle = self.ik.get_angles(smoothed_point)
 
-        print(f'C1: {coxa1_angle}, C2: {coxa2_angle}, F:{femur_angle}, T:{tibia_angle}')
-
         self._set_servo_angle(self.coxa1_servo, coxa1_angle)
-        #self._set_servo_angle(self.coxa2_servo, coxa2_angle)
-        #self._set_servo_angle(self.femur_servo, femur_angle)
-        #self._set_servo_angle(self.tibia_servo, tibia_angle)
+        self._set_servo_angle(self.coxa2_servo, coxa2_angle)
+        self._set_servo_angle(self.femur_servo, femur_angle)
+        self._set_servo_angle(self.tibia_servo, tibia_angle)
 
     def detach(self):
         self.coxa_servo.detach()

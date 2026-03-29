@@ -19,14 +19,14 @@ def main():
 #    servo = Servo(pca_pool, config['legs']['right_front']['femur']['servo'])
 #    servo.move(0)
 
-    left_point = Point3D(-200, 0, 0)
-    right_point = Point3D(200, 0, 0)
+    left_point = Point3D(-200, -50, -50)
+    right_point = Point3D(200, -50, -50)
 
     left_leg = Leg4DOF(config['legs']['left_front'], pca_pool, left_point)
     right_leg = Leg4DOF(config['legs']['right_front'], pca_pool, right_point)
 
-#    left_leg.tick(left_point + Point3D(0, 0, 0))
-#    left_leg.tick(left_point + Point3D(0, 0, 0))
+    left_leg.tick(left_point + Point3D(0, 0, 0))
+    left_leg.tick(left_point + Point3D(0, 0, 0))
     right_leg.tick(right_point + Point3D(0, 0, 0))
     right_leg.tick(right_point + Point3D(0, 0, 0))
 
