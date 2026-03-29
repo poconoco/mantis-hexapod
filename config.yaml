@@ -160,7 +160,7 @@ legs:
     coxa:
       angle1_for_perpendicular: 0
       h_offset: 50.1
-      v_offset: 0
+      v_offset: 12.5
       angle2_for_horizontal: 90
       angle2_physical_delta: 33.3
       length2: 69.824
@@ -207,7 +207,7 @@ legs:
     coxa:
       angle1_for_perpendicular: 0
       h_offset: 50.1
-      v_offset: 0
+      v_offset: 12.5
       angle2_for_horizontal: 90
       angle2_physical_delta: 33.3
       length2: 69.824
