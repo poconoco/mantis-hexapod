@@ -69,9 +69,9 @@ class Leg4DOF:
         print(f'C1: {coxa1_angle}, C2: {coxa2_angle}, F:{femur_angle}, T:{tibia_angle}')
 
         self._set_servo_angle(self.coxa1_servo, coxa1_angle)
-        self._set_servo_angle(self.coxa2_servo, coxa2_angle)
-        self._set_servo_angle(self.femur_servo, femur_angle)
-        self._set_servo_angle(self.tibia_servo, tibia_angle)
+        #self._set_servo_angle(self.coxa2_servo, coxa2_angle)
+        #self._set_servo_angle(self.femur_servo, femur_angle)
+        #self._set_servo_angle(self.tibia_servo, tibia_angle)
 
     def detach(self):
         self.coxa_servo.detach()

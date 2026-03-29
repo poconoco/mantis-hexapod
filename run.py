@@ -16,19 +16,19 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    #servo = Servo(pca_pool, config['legs']['right_front']['coxa']['servo2'])
-    #servo.move(0)
+#    servo = Servo(pca_pool, config['legs']['right_front']['femur']['servo'])
+#    servo.move(0)
 
-    left_point = Point3D(-70, 0, -100)
-    right_point = Point3D(70, 0, -100)
+    left_point = Point3D(-200, 0, 0)
+    right_point = Point3D(200, 0, 0)
 
     left_leg = Leg4DOF(config['legs']['left_front'], pca_pool, left_point)
-    right_leg = Leg4DOF(config['legs']['right_front'], pca_pool, left_point)
+    right_leg = Leg4DOF(config['legs']['right_front'], pca_pool, right_point)
 
 #    left_leg.tick(left_point + Point3D(0, 0, 0))
 #    left_leg.tick(left_point + Point3D(0, 0, 0))
-    right_leg.tick(left_point + Point3D(0, 0, 0))
-    right_leg.tick(left_point + Point3D(0, 0, 0))
+    right_leg.tick(right_point + Point3D(0, 0, 0))
+    right_leg.tick(right_point + Point3D(0, 0, 0))
 
     #print("\nPress Ctrl+C key to exit...")
     #try:
