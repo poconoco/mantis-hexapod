@@ -7,8 +7,11 @@ tail:
     multiplier: 1
 
 legs:
-  left_rear:
-    dof: 3
+  - dof: 3
+    side: left
+    order: 0
+    origin: { x: -34.542, y: -34.542, z: 0 }
+    relative_rest_pos: { x: -100, y: -50, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -42,8 +45,11 @@ legs:
     speed: 250
     acceleration: 200
 
-  right_rear:
-    dof: 3
+  - dof: 3
+    side: right
+    order: 0
+    origin: { x: 34.542, y: -34.542, z: 0 }
+    relative_rest_pos: { x: 100, y: -50, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -77,8 +83,11 @@ legs:
     speed: 250
     acceleration: 200
 
-  left_middle:
-    dof: 3
+  - dof: 3
+    side: left
+    order: 1
+    origin: { x: -34.542, y: 34.542, z: 0 }
+    relative_rest_pos: { x: -100, y: 50, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -112,8 +121,11 @@ legs:
     speed: 250
     acceleration: 200
 
-  right_middle:
-    dof: 3
+  - dof: 3
+    side: right
+    order: 1
+    origin: { x: 34.542, y: 34.542, z: 0 }
+    relative_rest_pos: { x: 100, y: 50, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -147,8 +159,11 @@ legs:
     speed: 250
     acceleration: 200
 
-  left_front:
-    dof: 4
+  - dof: 4
+    side: left
+    order: 2
+    origin: { x: -38.70, y: 162.121, z: 0 }
+    relative_rest_pos: { x: -120, y: 120, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -191,8 +206,11 @@ legs:
     speed: 250
     acceleration: 200
 
-  right_front:
-    dof: 4
+  - dof: 4
+    side: right
+    order: 2
+    origin: { x: 38.70, y: 162.121, z: 0 }
+    relative_rest_pos: { x: 120, y: 120, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -234,24 +252,3 @@ legs:
     mirror_x: false
     speed: 250
     acceleration: 200
-
-body:
-  leg_mounts:
-    left_rear:
-      x_offset: -34.542
-      y_offset: -34.542
-    right_rear:
-      x_offset: 34.542
-      y_offset: -34.542
-    left_middle:
-      x_offset: -34.542
-      y_offset: 34.542
-    right_middle:
-      x_offset: 34.542
-      y_offset: 34.542
-    left_front:
-      x_offset: -38.70
-      y_offset: 162.121
-    right_front:
-      x_offset: 38.70
-      y_offset: 162.121

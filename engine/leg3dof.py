@@ -2,18 +2,18 @@ import time
 
 from .py_kinematics.point3d import Point3D
 from .py_kinematics.ik3dof import IK3DOF
-from .py_kinematics.smoother3d import Smoother3D
 from .utils.pca_pool import PcaPool
 from .utils.servo import Servo
-from .leg import BaseLeg
+from .base_leg import BaseLeg
 
 
 class Leg3DOF(BaseLeg):
     def __init__(self, leg_config: dict, pca_pool: PcaPool, initial_point: Point3D):
+        super().__init__(leg_config, initial_point)
+
         if leg_config['dof'] != 3:
             raise ValueError(f'Expected 3 DOF for leg, got {leg_config["dof"]}')
 
-        self._prev_tick = None
         self._ik = IK3DOF()
         self._ik.coxa_h_offset = leg_config['coxa']['h_offset']
         self._ik.coxa_v_offset = leg_config['coxa']['v_offset']
@@ -29,18 +29,6 @@ class Leg3DOF(BaseLeg):
         # between the ends of L
         self._ik.tibia_angle_for_femur_parallel = leg_config['tibia']['angle_for_femur_parallel'] + \
             leg_config['tibia'].get('angle_physical_delta', 0.0) * leg_config['tibia'].get('multiplier', 1.0)
-
-        self._mirror_x = leg_config.get('mirror_x', False)
-
-        if self._mirror_x:
-            initial_point.x *= -1
-
-        self._smoother = Smoother3D(
-            initial_point,
-            leg_config['speed'],
-            leg_config['acceleration'],
-            1.0
-        )
 
         self._coxa_servo = Servo(pca_pool, leg_config['coxa']['servo'])
         self._femur_servo = Servo(pca_pool, leg_config['femur']['servo'])
