@@ -9,6 +9,7 @@ tail:
 
 legs:
   left_rear:
+    dof: 3
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -46,6 +47,7 @@ legs:
     acceleration: 200
 
   right_rear:
+    dof: 3
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -83,6 +85,7 @@ legs:
     acceleration: 200
 
   left_middle:
+    dof: 3
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -120,6 +123,7 @@ legs:
     acceleration: 200
 
   right_middle:
+    dof: 3
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -157,6 +161,7 @@ legs:
     acceleration: 200
 
   left_front:
+    dof: 4
     coxa:
       angle1_for_perpendicular: 0
       h_offset: 50.1
@@ -204,6 +209,7 @@ legs:
     acceleration: 200
 
   right_front:
+    dof: 4
     coxa:
       angle1_for_perpendicular: 0
       h_offset: 50.1

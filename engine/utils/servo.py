@@ -11,6 +11,9 @@ class Servo:
         self.multiplier = servo_config.get('multiplier', 1)
 
     def move(self, angle):
+        if angle is None:
+            return
+
         servo_angle = self.rest_angle + (self.angle_physical_delta + angle) * self.multiplier
         self.servo.angle = min(max(servo_angle, 0), 180)
 

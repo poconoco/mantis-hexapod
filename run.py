@@ -4,9 +4,8 @@ import board
 
 from engine.py_kinematics.point3d import Point3D
 from engine.utils.pca_pool import PcaPool
-from engine.utils.servo import Servo
-from engine.leg3dof import Leg3DOF
-from engine.leg4dof import Leg4DOF
+# from engine.utils.servo import Servo
+from engine.leg import create_leg
 
 def main():
 
@@ -22,8 +21,8 @@ def main():
     left_point = Point3D(-200, -50, -50)
     right_point = Point3D(200, -50, -50)
 
-    left_leg = Leg4DOF(config['legs']['left_front'], pca_pool, left_point)
-    right_leg = Leg4DOF(config['legs']['right_front'], pca_pool, right_point)
+    left_leg = create_leg(config['legs']['left_front'], pca_pool, left_point)
+    right_leg = create_leg(config['legs']['right_front'], pca_pool, right_point)
 
     left_leg.tick(left_point + Point3D(0, 0, 0))
     left_leg.tick(left_point + Point3D(0, 0, 0))
