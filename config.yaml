@@ -164,10 +164,10 @@ legs:
     dof: 4
     coxa:
       angle1_for_perpendicular: 0
-      h_offset: 50.1
-      v_offset: 12.5
       angle2_for_horizontal: 90
       angle2_physical_delta: 33.3
+      h_offset: 50.1
+      v_offset: 12.5
       length2: 69.824
       servo1:
         i2c_address: 0x40
@@ -212,10 +212,10 @@ legs:
     dof: 4
     coxa:
       angle1_for_perpendicular: 0
-      h_offset: 50.1
-      v_offset: 12.5
       angle2_for_horizontal: 90
       angle2_physical_delta: 33.3
+      h_offset: 50.1
+      v_offset: 12.5
       length2: 69.824
       servo1:
         i2c_address: 0x40
