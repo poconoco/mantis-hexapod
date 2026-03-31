@@ -18,8 +18,8 @@ def main():
 #    servo = Servo(pca_pool, config['legs']['right_front']['femur']['servo'])
 #    servo.move(0)
 
-    left_point = Point3D(-200, -50, -50)
-    right_point = Point3D(200, -50, -50)
+    left_point = Point3D(-200, 50, -30)
+    right_point = Point3D(200, 50, -30)
 
     left_leg = create_leg(config['legs']['left_front'], pca_pool, left_point)
     right_leg = create_leg(config['legs']['right_front'], pca_pool, right_point)

@@ -6,7 +6,7 @@ class Servo:
     def __init__(self, pca_pool: PcaPool, servo_config: dict):
         pca = pca_pool.get_pca(servo_config['i2c_address'])
         self.servo = servo.Servo(pca.channels[servo_config['channel']], min_pulse=servo_config['min_pulse'], max_pulse=servo_config['max_pulse'])
-        self.rest_angle = servo_config.get('rest_angle', 0)
+        self.rest_angle = servo_config.get('rest_angle', 90)
         self.multiplier = servo_config.get('multiplier', 1)
 
     def move(self, angle: float):
