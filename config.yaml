@@ -163,7 +163,7 @@ legs:
     side: left
     order: 2
     origin: { x: -38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: -120, y: 120, z: -120 }
+    relative_rest_pos: { x: -150, y: 130, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -201,7 +201,7 @@ legs:
         channel: 14
         min_pulse: 500
         max_pulse: 2430
-        multiplier: -1
+        multiplier: 1
     mirror_x: true
     speed: 250
     acceleration: 200
@@ -210,7 +210,7 @@ legs:
     side: right
     order: 2
     origin: { x: 38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: 120, y: 120, z: -120 }
+    relative_rest_pos: { x: 150, y: 130, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -248,7 +248,7 @@ legs:
         channel: 15
         min_pulse: 550
         max_pulse: 2520
-        multiplier: -1
+        multiplier: 1
     mirror_x: false
     speed: 250
     acceleration: 200

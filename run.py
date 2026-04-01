@@ -1,10 +1,11 @@
+import sys
 import yaml
 import time
 import board
 
 from engine.py_kinematics.point3d import Point3D
 from engine.utils.pca_pool import PcaPool
-# from engine.utils.servo import Servo
+from engine.utils.servo import Servo
 from engine.leg import create_leg
 
 def main():
@@ -15,14 +16,16 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-#    servo = Servo(pca_pool, config['legs']['right_front']['femur']['servo'])
-#    servo.move(0)
 
-    left_point = Point3D(-200, 50, -30)
-    right_point = Point3D(200, 50, -30)
+    #servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
+    #servo.move(90-15.2 - 73)
+    #sys.exit()
 
-    left_leg = create_leg(config['legs']['left_front'], pca_pool, left_point)
-    right_leg = create_leg(config['legs']['right_front'], pca_pool, right_point)
+    left_point = Point3D(-150, 130, -120)
+    right_point = Point3D(150, 130, -120)
+
+    left_leg = create_leg(config['legs'][4], pca_pool, left_point)
+    right_leg = create_leg(config['legs'][5], pca_pool, right_point)
 
     left_leg.tick(left_point + Point3D(0, 0, 0))
     left_leg.tick(left_point + Point3D(0, 0, 0))
