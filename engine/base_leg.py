@@ -6,9 +6,12 @@ from .py_kinematics.smoother3d import Smoother3D
 
 class BaseLeg(ABC):
 
-    def __init__(self, leg_config: dict, initial_point: Point3D):
+    def __init__(self, leg_config: dict, initial_point: Point3D | None):
         self._prev_tick = None
         self._mirror_x = leg_config.get('mirror_x', False)
+
+        if initial_point is None:
+            initial_point = leg_config['relative_rest_pos']
 
         self.origin = Point3D(
             leg_config['origin']['x'],

@@ -8,7 +8,7 @@ from .base_leg import BaseLeg
 
 
 class Leg3DOF(BaseLeg):
-    def __init__(self, leg_config: dict, pca_pool: PcaPool, initial_point: Point3D):
+    def __init__(self, leg_config: dict, pca_pool: PcaPool, initial_point: Point3D | None = None):
         super().__init__(leg_config, initial_point)
 
         if leg_config['dof'] != 3:

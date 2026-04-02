@@ -18,5 +18,16 @@ class Body:
 
     def tick(self):
         for leg in self.legs:
-            # TODO: apply orientation
-            leg.tick(self.translation + leg.relative_rest_pos)
+            tip = self.origin + leg.relative_rest_pos
+            tip = tip.rotate(self.orientation)
+            tip += self.translation
+
+            leg.tick(tip - leg.origin)
+
+        self.tail.tick()
+
+    def detach(self):
+        for leg in self.legs:
+            leg.detach()
+
+        self.tail.detach()
