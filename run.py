@@ -3,11 +3,11 @@ import yaml
 import time
 import board
 
-from .engine.py_kinematics.point3d import Point3D
-from .engine.utils.pca_pool import PcaPool
-from .engine.utils.servo import Servo
-from .engine.leg import create_leg
-from .engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
+from engine.py_kinematics.point3d import Point3D
+from engine.utils.pca_pool import PcaPool
+from engine.utils.servo import Servo
+from engine.leg import create_leg
+from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
 
 def main():
 
