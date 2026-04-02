@@ -52,7 +52,7 @@ class Leg3DOF(BaseLeg):
 
         coxa_angle, femur_angle, tibia_angle = self._ik.get_angles(smoothed_point)
 
-        print(f'C: {coxa_angle}, F:{femur_angle}, T:{tibia_angle}')
+        # print(f'C: {coxa_angle}, F:{femur_angle}, T:{tibia_angle}')
 
         self._coxa_servo.move(coxa_angle)
         self._femur_servo.move(femur_angle)

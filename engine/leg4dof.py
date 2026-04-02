@@ -45,10 +45,9 @@ class Leg4DOF(BaseLeg):
             self._prev_tick = now
             return
 
-        if self._mirror_x:
-            reach_to.x *= -1
+        x_mul = -1 if self._mirror_x else 1
 
-        self._smoother.set_target(reach_to)
+        self._smoother.set_target(Point3D(reach_to.x * x_mul, reach_to.y, reach_to.z))
         self._smoother.tick(now - self._prev_tick)
         self._prev_tick = now
 
@@ -56,7 +55,8 @@ class Leg4DOF(BaseLeg):
 
         coxa1_angle, coxa2_angle, femur_angle, tibia_angle = self._ik.get_angles(smoothed_point)
 
-        #print(f'Smoothed point: {smoothed_point}')
+        #print(f'reach_to: {reach_to}, smoothed_point: {smoothed_point}')
+
         #print(f'Angles: C1 {int(coxa1_angle)}, C2 {int(coxa2_angle)}, F {int(femur_angle)}, T {int(tibia_angle)}')
 
         self._coxa1_servo.move(coxa1_angle)

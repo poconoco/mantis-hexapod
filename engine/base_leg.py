@@ -22,11 +22,10 @@ class BaseLeg(ABC):
             leg_config['relative_rest_pos']['z']
         )
 
-        if self._mirror_x:
-            initial_point.x *= -1
+        x_mul = -1 if self._mirror_x else 1
 
         self._smoother = Smoother3D(
-            initial_point,
+            Point3D(initial_point.x * x_mul, initial_point.y, initial_point.z),
             leg_config['speed'],
             leg_config['acceleration'],
             1.0
