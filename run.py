@@ -20,8 +20,8 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    #run_body(config, pca_pool)
-    #sys.exit()
+    run_body(config, pca_pool)
+    sys.exit()
 
     #servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
     #servo.move(90-15.2 - 73)
@@ -30,8 +30,8 @@ def main():
     #left_point1 = Point3D.from_dict(config['legs'][2]['relative_rest_pos'])
     #right_point1 = Point3D.from_dict(config['legs'][3]['relative_rest_pos'])
 
-    left_point1 = Point3D(-150, -20, -100)
-    right_point1 = Point3D(150, -20, -100)
+    left_point1 = Point3D(-80, 100, 80)
+    right_point1 = Point3D(80, 100, 80)
 
     left_leg1 = create_leg(config['legs'][2], pca_pool, left_point1)
     right_leg1 = create_leg(config['legs'][3], pca_pool, right_point1)
@@ -66,15 +66,15 @@ def run_body(config: dict, pca_pool: PcaPool):
                 rc.send(f'Live for: {round(rc.get_connected_time())}s')
 
                 body.translation = Point3D(
-                    rc.get_x1(),
-                    rc.get_y1(),
-                    rc.get_slider_left()
+                    - rc.get_x1(),
+                    - rc.get_y1(),
+                    - rc.get_slider_left()
                 ) * translation_scale
 
                 body.orientation = Orientation3D(
-                    rc.get_y1() * orientation_scale,
-                    rc.get_y2() * orientation_scale,
-                    rc.get_slider_right() * orientation_scale
+                    - rc.get_y2() * orientation_scale,
+                    - rc.get_x2() * orientation_scale,
+                    - rc.get_slider_right() * orientation_scale
                 )
 
                 body.tick()

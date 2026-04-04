@@ -11,7 +11,7 @@ class BaseLeg(ABC):
         self._mirror_x = leg_config.get('mirror_x', False)
 
         if initial_point is None:
-            initial_point = leg_config['relative_rest_pos']
+            initial_point = Point3D.from_dict(leg_config['relative_rest_pos'])
 
         self.origin = Point3D(
             leg_config['origin']['x'],

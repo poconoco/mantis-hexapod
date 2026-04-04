@@ -18,7 +18,7 @@ class Body:
 
     def tick(self):
         for leg in self.legs:
-            tip = self.origin + leg.relative_rest_pos
+            tip = leg.origin + leg.relative_rest_pos
             tip = tip.rotate(self.orientation)
             tip += self.translation
 

@@ -7,7 +7,7 @@ from .leg3dof import Leg3DOF
 from .leg4dof import Leg4DOF
 
 
-def create_leg(leg_config: dict, pca_pool: PcaPool, initial_point: Optional[Point3D]) -> BaseLeg:
+def create_leg(leg_config: dict, pca_pool: PcaPool, initial_point: Optional[Point3D] = None) -> BaseLeg:
     if leg_config['dof'] == 3:
         return Leg3DOF(leg_config, pca_pool, initial_point)
     elif leg_config['dof'] == 4:
