@@ -1,7 +1,9 @@
+import board
+
 from adafruit_pca9685 import PCA9685
 
 class PcaPool:
-    def __init__(self, i2c):
+    def __init__(self, i2c: board.I2C):
         self.i2c = i2c
         self.pca_dict = {}
 

@@ -1,5 +1,7 @@
 import time
 
+from typing import Optional
+
 from .py_kinematics.point3d import Point3D
 from .py_kinematics.ik3dof import IK3DOF
 from .utils.pca_pool import PcaPool
@@ -8,7 +10,7 @@ from .base_leg import BaseLeg
 
 
 class Leg3DOF(BaseLeg):
-    def __init__(self, leg_config: dict, pca_pool: PcaPool, initial_point: Point3D | None = None):
+    def __init__(self, leg_config: dict, pca_pool: PcaPool, initial_point: Optional[Point3D] = None):
         super().__init__(leg_config, initial_point)
 
         if leg_config['dof'] != 3:
@@ -27,7 +29,7 @@ class Leg3DOF(BaseLeg):
         # angle_physical_delta is used for femur that are L-shaped, and it's easier to
         # calibrate angles for the straight part of the tibia, but the real tibia is diagonal
         # between the ends of L
-        self._ik.tibia_angle_for_femur_parallel = leg_config['tibia']['angle_for_femur_parallel'] + \
+        self._ik.tibia_angle_for_femur_parallel = leg_config['tibia']['angle_for_femur_parallel'] - \
             leg_config['tibia'].get('angle_physical_delta', 0.0) * leg_config['tibia'].get('multiplier', 1.0)
 
         self._coxa_servo = Servo(pca_pool, leg_config['coxa']['servo'])

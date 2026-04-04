@@ -20,87 +20,29 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    run_body(config, pca_pool)
-    sys.exit()
+    #run_body(config, pca_pool)
+    #sys.exit()
 
     #servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
     #servo.move(90-15.2 - 73)
     #sys.exit()
 
-    left_point1 = Point3D.from_dict(config['legs'][2]['relative_rest_pos'])
-    right_point1 = Point3D.from_dict(config['legs'][3]['relative_rest_pos'])
+    #left_point1 = Point3D.from_dict(config['legs'][2]['relative_rest_pos'])
+    #right_point1 = Point3D.from_dict(config['legs'][3]['relative_rest_pos'])
 
-    left_point2 = Point3D.from_dict(config['legs'][4]['relative_rest_pos'])
-    right_point2 = Point3D.from_dict(config['legs'][5]['relative_rest_pos'])
+    left_point1 = Point3D(-150, -20, -100)
+    right_point1 = Point3D(150, -20, -100)
 
     left_leg1 = create_leg(config['legs'][2], pca_pool, left_point1)
     right_leg1 = create_leg(config['legs'][3], pca_pool, right_point1)
 
-    left_leg2 = create_leg(config['legs'][4], pca_pool, left_point2)
-    right_leg2 = create_leg(config['legs'][5], pca_pool, right_point2)
 
+    right_leg1.tick(right_point1 + Point3D(0, 0, 0))
+    right_leg1.tick(right_point1 + Point3D(0, 0, 0))
 
-    # right_leg.tick(right_point + Point3D(0, 0, 0))
-    # right_leg.tick(right_point + Point3D(0, 0, 0))
+    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
+    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
 
-#    sys.exit()
-
-    rc = TcpRcReceiver(print_debug=True)
-    scale = 0.5
-
-    print("\nPress Ctrl+C key to exit...")
-    try:
-        while True:
-            if rc.is_connected():
-                #print('\r'+rc_state_to_str(rc), end='', flush=True)
-                rc.send(f'Live for: {round(rc.get_connected_time())}s')
-
-                left_leg1.tick(
-                    left_point1 + Point3D(
-                        -rc.get_slider_left(),
-                        -rc.get_x1(),
-                        rc.get_y1()
-                    ) * scale
-                )
-
-                right_leg1.tick(
-                    right_point1 + Point3D(
-                        rc.get_slider_right(),
-                        rc.get_x2(),
-                        rc.get_y2()
-                    ) * scale
-                )
-
-                left_leg2.tick(
-                    left_point2 + Point3D(
-                        -rc.get_slider_left(),
-                        -rc.get_x1(),
-                        rc.get_y1()
-                    ) * scale
-                )
-
-                right_leg2.tick(
-                    right_point2 + Point3D(
-                        rc.get_slider_right(),
-                        rc.get_x2(),
-                        rc.get_y2()
-                    ) * scale
-                )
-
-            else:
-                left_leg1.detach()
-                right_leg1.detach()
-                left_leg2.detach()
-                right_leg2.detach()
-
-            time.sleep(0.005)
-    except KeyboardInterrupt:
-        print("\nExiting...")
-    finally:
-        left_leg1.detach()
-        right_leg1.detach()
-        left_leg2.detach()
-        right_leg2.detach()
 
 
 def run_body(config: dict, pca_pool: PcaPool):
