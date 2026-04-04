@@ -1,6 +1,11 @@
 [submodule "engine/bt_remote"]
 	path = engine/bt_remote
 	url = git@github.com:poconoco/bt-remote.git
+	branch = main
+        update = merge
+
 [submodule "engine/py_kinematics"]
 	path = engine/py_kinematics
 	url = git@github.com:poconoco/py-kinematics.git
+	branch = main
+        update = merge
