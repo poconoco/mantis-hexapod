@@ -51,7 +51,7 @@ def run_body(config: dict, pca_pool: PcaPool):
         leg = create_leg(leg_config, pca_pool)
         legs.append(leg)
 
-    tail = Tail()
+    tail = Tail(config['tail'], pca_pool)
     body = Body(legs, tail)
 
     rc = TcpRcReceiver(print_debug=True)

@@ -31,7 +31,6 @@ class BaseLeg(ABC):
             Point3D(initial_point.x * x_mul, initial_point.y, initial_point.z),
             leg_config['speed'],
             leg_config['acceleration'],
-            1.0
         )
 
     @abstractmethod
