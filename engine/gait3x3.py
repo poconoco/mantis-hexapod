@@ -80,9 +80,9 @@ class Gait3x3(BaseGait):
         return self._normalize_cycle_pos(current_pos + delta)
         
     def _normalize_cycle_pos(self, cycle_pos: float) -> float:
-        if cycle_pos > 1:
-            return cycle_pos - 2
-    
+        while cycle_pos > 1:
+            cycle_pos -= 2
+
         return cycle_pos
 
     def _is_leg_a(self, leg: BaseLeg) -> bool:

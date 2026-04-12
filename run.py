@@ -11,7 +11,7 @@ from engine.leg import create_leg
 from engine.tail import Tail
 from engine.gait3x3 import Gait3x3
 from engine.body import Body
-from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
+from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver, normalize_rc_input
 
 def main():
 
@@ -21,8 +21,8 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    #run_body(config, pca_pool)
-    #sys.exit()
+    run_body(config, pca_pool)
+    sys.exit()
 
     #servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
     #servo.move(90-15.2 - 73)
@@ -82,10 +82,18 @@ def run_body(config: dict, pca_pool: PcaPool):
                 #print('\r'+rc_state_to_str(rc), end='', flush=True)
                 rc.send(f'Live for: {round(rc.get_connected_time())}s')
 
+                gait.set_direction(
+                    Point3D(
+                        normalize_rc_input(rc.get_x1()),
+                        normalize_rc_input(rc.get_y1()),
+                        0
+                    ).cube_to_sphere()
+                )
+
                 body.translation = Point3D(
-                    - rc.get_x1(),
-                    - rc.get_y1(),
-                    - rc.get_slider_left()
+                    - rc.get_x2(),
+                    - rc.get_y2(),
+                    - rc.get_slider_right()
                 ) * translation_scale
 
                 body.orientation = Orientation3D(
