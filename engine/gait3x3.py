@@ -33,7 +33,7 @@ class Gait3x3(BaseGait):
         if direction.z != 0:
             raise ValueError(f"Direction z component must be 0, got: {direction.z}")
 
-        if direction.magnitude() > 1:
+        if direction.magnitude() > 1.0001:
             raise ValueError(f"Direction magnitude should be <= 1, got {direction} -> {direction.magnitude()}")
 
         self._direction = direction

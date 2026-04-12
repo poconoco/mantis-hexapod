@@ -11,7 +11,7 @@ from engine.leg import create_leg
 from engine.tail import Tail
 from engine.gait3x3 import Gait3x3
 from engine.body import Body
-from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver, normalize_rc_input
+from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
 
 def main():
 
@@ -97,7 +97,7 @@ def run_body(config: dict, pca_pool: PcaPool):
                 ) * translation_scale
 
                 body.orientation = Orientation3D(
-                    - rc.get_pitch() * orientation_scale,
+                    rc.get_pitch() * orientation_scale,
                     - rc.get_roll() * orientation_scale,
                     - rc.get_slider_right() * orientation_scale
                 )
@@ -111,7 +111,10 @@ def run_body(config: dict, pca_pool: PcaPool):
         body.detach()
 
 
+def normalize_rc_input(rc_input):
+    normalized = rc_input / 127
+    return min(max(normalized, -1), 1)
+
+
 if __name__ == "__main__":
     main()
-
-

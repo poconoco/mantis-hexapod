@@ -8,15 +8,15 @@ tail:
 
 gait:
   steps_per_second: 2
-  step_length: 80
-  step_height: 30
+  step_length: 100
+  step_height: 50
 
 legs:
   - dof: 3
     side: left
     order: 0
     origin: { x: -34.542, y: -34.542, z: 0 }
-    relative_rest_pos: { x: -100, y: -50, z: -120 }
+    relative_rest_pos: { x: -100, y: -70, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -54,7 +54,7 @@ legs:
     side: right
     order: 0
     origin: { x: 34.542, y: -34.542, z: 0 }
-    relative_rest_pos: { x: 100, y: -50, z: -120 }
+    relative_rest_pos: { x: 100, y: -70, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -92,7 +92,7 @@ legs:
     side: left
     order: 1
     origin: { x: -34.542, y: 34.542, z: 0 }
-    relative_rest_pos: { x: -100, y: 50, z: -120 }
+    relative_rest_pos: { x: -100, y: 30, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -130,7 +130,7 @@ legs:
     side: right
     order: 1
     origin: { x: 34.542, y: 34.542, z: 0 }
-    relative_rest_pos: { x: 100, y: 50, z: -120 }
+    relative_rest_pos: { x: 100, y: 30, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -168,7 +168,7 @@ legs:
     side: left
     order: 2
     origin: { x: -38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: -150, y: 130, z: -120 }
+    relative_rest_pos: { x: -80, y: 200, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -215,7 +215,7 @@ legs:
     side: right
     order: 2
     origin: { x: 38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: 150, y: 130, z: -120 }
+    relative_rest_pos: { x: 80, y: 200, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
