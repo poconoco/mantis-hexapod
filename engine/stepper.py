@@ -9,8 +9,9 @@ class Stepper:
 
     def step(self, direction: Point3D, cycle_pos: float) -> Point3D:
 
+
         # Leg is on the ground in this part of the cycle
-        if -0.5 >= cycle_pos >= 0.5:
+        if -0.5 <= cycle_pos and cycle_pos <= 0.5:
             return Point3D(- direction.x * cycle_pos, - direction.y * cycle_pos, 0)
 
         # Leg is lifted, so calculating half circle movement        
@@ -21,12 +22,12 @@ class Stepper:
         else:
             raise ValueError(f"Invalid cycle_pos: {cycle_pos}")
 
-        angle = math.pi * (1 - normalized_lifted_cycle_pos * 2)
+        angle = (math.pi / 2) - math.pi * normalized_lifted_cycle_pos
         
         z = math.sin(angle) * self._step_height
 
         return Point3D(
-            - direction.x * normalized_lifted_cycle_pos, 
-            - direction.y * normalized_lifted_cycle_pos, 
+            direction.x * normalized_lifted_cycle_pos,
+            direction.y * normalized_lifted_cycle_pos,
             z
         )

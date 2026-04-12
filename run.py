@@ -9,6 +9,7 @@ from engine.utils.pca_pool import PcaPool
 from engine.utils.servo import Servo
 from engine.leg import create_leg
 from engine.tail import Tail
+from engine.gait3x3 import Gait3x3
 from engine.body import Body
 from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
 
@@ -20,8 +21,8 @@ def main():
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    run_body(config, pca_pool)
-    sys.exit()
+    #run_body(config, pca_pool)
+    #sys.exit()
 
     #servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
     #servo.move(90-15.2 - 73)
@@ -30,18 +31,33 @@ def main():
     #left_point1 = Point3D.from_dict(config['legs'][2]['relative_rest_pos'])
     #right_point1 = Point3D.from_dict(config['legs'][3]['relative_rest_pos'])
 
-    left_point1 = Point3D(-80, 100, 80)
-    right_point1 = Point3D(80, 100, 80)
+    left_point1 = Point3D(-180, 0, -120)
+    right_point1 = Point3D(180, 0, -120)
 
-    left_leg1 = create_leg(config['legs'][2], pca_pool, left_point1)
-    right_leg1 = create_leg(config['legs'][3], pca_pool, right_point1)
+    gait = Gait3x3(config['gait'])
+    gait.set_direction(Point3D(0, 0.5, 0))
+
+    left_leg1 = create_leg(config['legs'][4], pca_pool, left_point1)
+    right_leg1 = create_leg(config['legs'][5], pca_pool, right_point1)
+
+#    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
+#    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
+
+#    right_leg1.tick(right_point1 + Point3D(0, 0, 0))
+#    right_leg1.tick(right_point1 + Point3D(0, 0, 0))
 
 
-    right_leg1.tick(right_point1 + Point3D(0, 0, 0))
-    right_leg1.tick(right_point1 + Point3D(0, 0, 0))
+    print("\nPress Ctrl+C key to exit...")
+    try:
+        while True:
+            gait.tick()
 
-    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
-    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
+            left_leg1.tick(left_point1 + gait.get_tip_offset(left_leg1))
+            right_leg1.tick(right_point1 + gait.get_tip_offset(right_leg1))
+
+            time.sleep(0.005)
+    except KeyboardInterrupt:
+        print("\nExiting...")
 
 
 
@@ -52,7 +68,8 @@ def run_body(config: dict, pca_pool: PcaPool):
         legs.append(leg)
 
     tail = Tail(config['tail'], pca_pool)
-    body = Body(legs, tail)
+    gait = Gait3x3(config['gait'])
+    body = Body(legs, tail, gait)
 
     rc = TcpRcReceiver(print_debug=True)
     translation_scale = 0.5

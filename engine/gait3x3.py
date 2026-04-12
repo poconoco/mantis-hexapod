@@ -3,15 +3,16 @@ import time
 from .base_leg import BaseLeg
 from .stepper import Stepper
 from .py_kinematics.point3d import Point3D
+from .base_gait import BaseGait
 
 
-class Gait3x3:
-    def __init__(self, steps_per_second: float, step_length: float, step_height: float):
-        self._steps_per_second = steps_per_second
-        self._step_length = step_length
+class Gait3x3(BaseGait):
+    def __init__(self, config: dict):
+        self._steps_per_second = config['steps_per_second']
+        self._step_length = config['step_length']
         self._prev_tick = None
         self._direction = Point3D()
-        self._stepper = Stepper(step_height)
+        self._stepper = Stepper(config['step_height'])
         self._leg_a_tip_pos = Point3D()
         self._leg_b_tip_pos = Point3D()
         self._stationary = True
@@ -70,7 +71,7 @@ class Gait3x3:
             self._leg_b_tip_pos = self._stepper.step(step_direction, self._normalize_cycle_pos(self._step_cycle_pos + 1))
 
     def get_tip_offset(self, leg: BaseLeg) -> Point3D:
-        if self.is_leg_a(leg):
+        if self._is_leg_a(leg):
             return self._leg_a_tip_pos
         else:
             return self._leg_b_tip_pos

@@ -6,6 +6,11 @@ tail:
     max_pulse: 2550
     multiplier: 1
 
+gait:
+  steps_per_second: 2
+  step_length: 80
+  step_height: 30
+
 legs:
   - dof: 3
     side: left
