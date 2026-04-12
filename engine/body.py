@@ -24,7 +24,7 @@ class Body:
 
             leg.tick(tip - leg.origin)
 
-        self.tail.tick(-self.orientation.pitch)
+        self.tail.tick(self.orientation.pitch * 2)
 
     def detach(self):
         for leg in self.legs:

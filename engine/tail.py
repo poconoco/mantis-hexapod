@@ -16,8 +16,8 @@ class Tail:
         # but use only x
         self._smoother = Smoother3D(
             Point3D(0, 0, 0),
-            10, # Speed
-            10, # Acceleration
+            100, # Speed
+            200, # Acceleration
         )
 
     def tick(self, angle: float):

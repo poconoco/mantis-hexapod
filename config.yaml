@@ -203,8 +203,8 @@ legs:
         max_pulse: 2430
         multiplier: 1
     mirror_x: true
-    speed: 250
-    acceleration: 200
+    speed: 500
+    acceleration: 400
 
   - dof: 4
     side: right
@@ -250,5 +250,5 @@ legs:
         max_pulse: 2520
         multiplier: 1
     mirror_x: false
-    speed: 250
-    acceleration: 200
+    speed: 500
+    acceleration: 400

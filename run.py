@@ -56,7 +56,7 @@ def run_body(config: dict, pca_pool: PcaPool):
 
     rc = TcpRcReceiver(print_debug=True)
     translation_scale = 0.5
-    orientation_scale = 0.1
+    orientation_scale = 0.2
 
     print("\nPress Ctrl+C key to exit...")
     try:
@@ -72,14 +72,12 @@ def run_body(config: dict, pca_pool: PcaPool):
                 ) * translation_scale
 
                 body.orientation = Orientation3D(
-                    - rc.get_y2() * orientation_scale,
-                    - rc.get_x2() * orientation_scale,
+                    - rc.get_pitch() * orientation_scale,
+                    - rc.get_roll() * orientation_scale,
                     - rc.get_slider_right() * orientation_scale
                 )
 
-                body.tick()
-            else:
-                body.detach()
+            body.tick()
 
             time.sleep(0.005)
     except KeyboardInterrupt:
