@@ -75,7 +75,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
         legs.append(leg)
 
     tail = Tail(config['tail'], pca_pool)
-    gait = Gait3x3(config['gait'])
+    gait = Gait3x3(config['gait'], legs)
     body = Body(legs, tail, gait)
 
     rc = TcpRcReceiver(print_debug=True)

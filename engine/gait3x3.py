@@ -7,27 +7,27 @@ from .base_gait import BaseGait
 
 
 class Gait3x3(BaseGait):
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, legs: list[BaseLeg]):
         self._steps_per_second = config['steps_per_second']
         self._step_length = config['step_length']
         self._prev_tick = None
         self._direction = Point3D()
-        self._stepper = Stepper(config['step_height'])
+        self._normalized_step_direction = Point3D()
         self._leg_a_tip_pos = Point3D()
         self._leg_b_tip_pos = Point3D()
         self._stationary = True
         self._zero_direction_since = None
-
-        # Defines the step cycle position:
-        # 0    - leg is on the ground in the middle of the step stroke
-        # 0.5  - leg is moved half-step to push the body forward (e.g. leg is moved back)
-        #        at this point, leg starts to lift and move forward
-        # 1    - leg is at the highest posiotion and in the middle of the step stroke
-        #        here we flip position to -1 so it is cyclic
-        # -1   - phisically same position as 1, leg starts to descend and continues to move forward
-        # -0.5 - leg is touched the ground, it's half-step forward, and starts to move backward (to push body forward)
-        # 0    - then cycle repeats
+        self._cycle_length = 100
         self._step_cycle_pos = 0
+        step_height = config['step_height']
+
+        self._steppers = {}
+        for i, leg in enumerate(legs):
+            self._steppers[leg] = Stepper(
+                step_height,
+                cycle_length=self._cycle_length,
+                leg_group_count=2,
+                leg_phase_offset=(self._cycle_length / 2) * (leg.config['order'] + (0 if leg.config['side'] == 'left' else 1)))
 
     def set_direction(self, direction: Point3D):
         if direction.z != 0:
@@ -37,6 +37,7 @@ class Gait3x3(BaseGait):
             raise ValueError(f"Direction magnitude should be <= 1, got {direction} -> {direction.magnitude()}")
 
         self._direction = direction
+        self._normalized_step_direction = self._direction.normalized() * self._step_length
 
     def tick(self):
         now = time.time()
@@ -58,30 +59,18 @@ class Gait3x3(BaseGait):
             dt = now - self._prev_tick
             self._prev_tick = now
 
-            cycle_pos_delta = dt * self._steps_per_second * self._direction.magnitude()
-            self._step_cycle_pos = self._get_next_cycle_pos(self._step_cycle_pos, cycle_pos_delta)
-
-        if self._stationary:
-            self._leg_a_tip_pos = Point3D()
-            self._leg_b_tip_pos = Point3D()
-        else:
-            step_direction = self._direction.normalized() * self._step_length
-
-            self._leg_a_tip_pos = self._stepper.step(step_direction, self._step_cycle_pos)
-            self._leg_b_tip_pos = self._stepper.step(step_direction, self._normalize_cycle_pos(self._step_cycle_pos + 1))
+            cycle_pos_delta = dt * self._steps_per_second * self._direction.magnitude() * self._cycle_length
+            self._step_cycle_pos = self._normalize_cycle_pos(self._step_cycle_pos + cycle_pos_delta)
 
     def get_tip_offset(self, leg: BaseLeg) -> Point3D:
-        if self._is_leg_a(leg):
-            return self._leg_a_tip_pos
+        if self._stationary:
+            return Point3D()
         else:
-            return self._leg_b_tip_pos
+            return self._steppers[leg].step(self._normalized_step_direction, self._step_cycle_pos)
 
-    def _get_next_cycle_pos(self, current_pos: float, delta: float) -> float:
-        return self._normalize_cycle_pos(current_pos + delta)
-        
     def _normalize_cycle_pos(self, cycle_pos: float) -> float:
-        while cycle_pos > 1:
-            cycle_pos -= 2
+        while cycle_pos >= self._cycle_length:
+            cycle_pos -= self._cycle_length
 
         return cycle_pos
 
