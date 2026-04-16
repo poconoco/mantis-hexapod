@@ -9,7 +9,7 @@ tail:
 gait:
   steps_per_second: 2
   step_length: 100
-  step_height: 50
+  step_height: 100
 
 legs:
   - dof: 3

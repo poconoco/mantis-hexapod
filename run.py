@@ -107,6 +107,8 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                     - rc.get_roll() * orientation_scale,
                     0
                 )
+            elif DESKTOP:
+                gait.set_direction(Point3D(0, 0.5, 0))
 
             body.tick()
             if visualizer:
