@@ -74,19 +74,30 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
         leg = create_leg(leg_config, pca_pool)
         legs.append(leg)
 
+    gait_type = Gait.Type.GAIT_5_1
     tail = Tail(config['tail'], pca_pool)
-    gait = Gait(config['gait'], legs, Gait.Type.GAIT_4_2)
+    gait = Gait(config['gait'], legs, gait_type)
     body = Body(legs, tail, gait)
 
     rc = TcpRcReceiver(print_debug=True)
     translation_scale = 0.5
     orientation_scale = 0.2
+    prev_switch_e_state = False
 
     print("\nPress Ctrl+C key to exit...")
     try:
         while True:
             if rc.is_connected():
-                rc.send(f'Live for: {round(rc.get_connected_time())}s')
+                rc.send(f'Gait: {gait.get_type().name}')
+
+                new_switch_e_state = rc.get_switch_e()
+                if not new_switch_e_state and prev_switch_e_state:
+                    # Button e clicked
+                    gait_type = gait_type.next()
+                prev_switch_e_state = new_switch_e_state
+
+                if gait_type != gait.get_type():
+                    gait.set_type(gait_type)
 
                 gait.set_direction(
                     Point3D(

@@ -12,7 +12,13 @@ class Gait:
         GAIT_3_3 = 1
         GAIT_4_2 = 2
         GAIT_5_1 = 3
-
+        def next(self):
+            cls = self.__class__
+            members = list(cls)
+            current_index = members.index(self)
+            next_index = (current_index + 1) % len(members)
+            return members[next_index]
+        
     def __init__(self, config: dict, legs: list[BaseLeg], initial_type: Type):
         self._steps_per_second = config['steps_per_second']
         self._step_length = config['step_length']
@@ -27,13 +33,15 @@ class Gait:
         self._cycle_length = 100
         self._step_cycle_pos = None
         self._rest_cycle_pos = None
-        self._stationary_timeout = 5.0  # timeout in seconds after which all legs will be down, and step cycle reset
+        self._type = None
+        self._stationary_timeout = 2  # timeout in seconds after which all legs will be down, and step cycle reset
         self._legs = legs
         self._steppers = {}
 
-        self.set_gait(initial_type)
+        self.set_type(initial_type)
 
-    def set_gait(self, type: Type):
+    def set_type(self, type: Type):
+        self._type = type
         for i, leg in enumerate(self._legs):
             if type == Gait.Type.GAIT_3_3:
                 leg_group_count = 2
@@ -71,6 +79,9 @@ class Gait:
 
         self._rest_cycle_pos = stepper.down_phase_length / 2
         self._step_cycle_pos = self._rest_cycle_pos
+
+    def get_type(self):
+        return self._type
 
     def set_direction(self, direction: Point3D):
         if direction.z != 0:
