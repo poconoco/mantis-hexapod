@@ -1,7 +1,5 @@
 import time
 
-from typing import Optional
-
 from .py_kinematics.point3d import Point3D
 from .py_kinematics.ik4dof import IK4DOF
 from .utils.pca_pool import PcaPool
@@ -10,8 +8,8 @@ from .base_leg import BaseLeg
 
 
 class Leg4DOF(BaseLeg):
-    def __init__(self, leg_config: dict, pca_pool: PcaPool, initial_point: Optional[Point3D] = None):
-        super().__init__(leg_config, initial_point)
+    def __init__(self, leg_config: dict, pca_pool: PcaPool):
+        super().__init__(leg_config)
 
         if leg_config['dof'] != 4:
             raise ValueError(f'Expected 4 DOF for leg, got {leg_config["dof"]}')

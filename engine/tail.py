@@ -9,6 +9,10 @@ from .py_kinematics.point3d import Point3D
 
 class Tail:
     def __init__(self, tail_config: dict, pca_pool: PcaPool):
+        if not pca_pool:
+            self._servo = None
+            return
+
         self._servo = Servo(pca_pool, tail_config['servo'])
         self._prev_tick = None
 
@@ -21,6 +25,9 @@ class Tail:
         )
 
     def tick(self, angle: float):
+        if not self._servo:
+            return
+
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
@@ -34,4 +41,7 @@ class Tail:
         self._servo.move(smoothed_angle)
 
     def detach(self):
+        if not self._servo:
+            return
+
         self._servo.detach()

@@ -3,6 +3,7 @@ import yaml
 import time
 import board
 
+from system_detector import DESKTOP
 from engine.py_kinematics.point3d import Point3D
 from engine.py_kinematics.orientation3d import Orientation3D
 from engine.utils.pca_pool import PcaPool
@@ -15,8 +16,11 @@ from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
 
 def main():
 
-    i2c = board.I2C()
-    pca_pool = PcaPool(i2c)
+    if not DESKTOP:
+        i2c = board.I2C()
+        pca_pool = PcaPool(i2c)
+    else:
+        pca_pool = None
 
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
