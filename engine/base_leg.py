@@ -11,6 +11,8 @@ class BaseLeg(ABC):
         self._prev_tick = None
         self._mirror_x = self.config.get('mirror_x', False)
 
+        self.side = self.config['side']
+        self.order = self.config['order']
         self.origin = Point3D.from_dict(self.config['origin'])
         self.relative_rest_pos = Point3D.from_dict(self.config['relative_rest_pos'])
         self.current_abs_pos = self.origin + self.relative_rest_pos

@@ -11,7 +11,7 @@ from engine.utils.pca_pool import PcaPool
 from engine.utils.servo import Servo
 from engine.leg import create_leg
 from engine.tail import Tail
-from engine.gait3x3 import Gait3x3
+from engine.gait import Gait
 from engine.body import Body
 from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
 
@@ -41,11 +41,11 @@ def main():
     left_point1 = Point3D(-180, 0, -120)
     right_point1 = Point3D(180, 0, -120)
 
-    gait = Gait3x3(config['gait'])
-    gait.set_direction(Point3D(0, 0.5, 0))
-
     left_leg1 = create_leg(config['legs'][4], pca_pool, left_point1)
     right_leg1 = create_leg(config['legs'][5], pca_pool, right_point1)
+
+    gait = Gait(config['gait'], [left_leg1, right_leg1], Gait.Type.GAIT_3_3)
+    gait.set_direction(Point3D(0, 0.5, 0))
 
 #    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
 #    left_leg1.tick(left_point1 + Point3D(0, 0, 0))
@@ -57,10 +57,10 @@ def main():
     print("\nPress Ctrl+C key to exit...")
     try:
         while True:
-            gait.tick()
+            # gait.tick()
 
-            left_leg1.tick(left_point1 + gait.get_tip_offset(left_leg1))
-            right_leg1.tick(right_point1 + gait.get_tip_offset(right_leg1))
+            # left_leg1.tick(left_point1 + gait.get_tip_offset(left_leg1))
+            # right_leg1.tick(right_point1 + gait.get_tip_offset(right_leg1))
 
             time.sleep(0.005)
     except KeyboardInterrupt:
@@ -75,7 +75,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
         legs.append(leg)
 
     tail = Tail(config['tail'], pca_pool)
-    gait = Gait3x3(config['gait'], legs)
+    gait = Gait(config['gait'], legs, Gait.Type.GAIT_4_2)
     body = Body(legs, tail, gait)
 
     rc = TcpRcReceiver(print_debug=True)
