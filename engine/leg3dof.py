@@ -35,6 +35,7 @@ class Leg3DOF(BaseLeg):
         self._tibia_servo = Servo(pca_pool, leg_config['tibia']['servo'])
 
     def tick(self, reach_to: Point3D):
+        super().tick(reach_to)
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now

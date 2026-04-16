@@ -13,6 +13,7 @@ class BaseLeg(ABC):
 
         self.origin = Point3D.from_dict(self.config['origin'])
         self.relative_rest_pos = Point3D.from_dict(self.config['relative_rest_pos'])
+        self.current_abs_pos = self.origin + self.relative_rest_pos
 
         x_mul = -1 if self._mirror_x else 1
 
@@ -26,10 +27,8 @@ class BaseLeg(ABC):
             self.config['acceleration'],
         )
 
-    @abstractmethod
     def tick(self, reach_to: Point3D):
-        pass
+        self.current_abs_pos = self.origin + self.relative_rest_pos + reach_to
 
-    @abstractmethod
     def detach(self):
         pass

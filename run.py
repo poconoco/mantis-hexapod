@@ -4,6 +4,7 @@ import time
 import board
 
 from system_detector import DESKTOP
+from visualizer import Visualizer
 from engine.py_kinematics.point3d import Point3D
 from engine.py_kinematics.orientation3d import Orientation3D
 from engine.utils.pca_pool import PcaPool
@@ -19,13 +20,15 @@ def main():
     if not DESKTOP:
         i2c = board.I2C()
         pca_pool = PcaPool(i2c)
+        visualizer = None
     else:
         pca_pool = None
+        visualizer = Visualizer()
 
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
 
-    run_body(config, pca_pool)
+    run_body(config, pca_pool, visualizer)
     sys.exit()
 
     #servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
@@ -65,7 +68,7 @@ def main():
 
 
 
-def run_body(config: dict, pca_pool: PcaPool):
+def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     legs = []
     for leg_config in config['legs']:
         leg = create_leg(leg_config, pca_pool)
@@ -83,7 +86,6 @@ def run_body(config: dict, pca_pool: PcaPool):
     try:
         while True:
             if rc.is_connected():
-                #print('\r'+rc_state_to_str(rc), end='', flush=True)
                 rc.send(f'Live for: {round(rc.get_connected_time())}s')
 
                 gait.set_direction(
@@ -103,16 +105,19 @@ def run_body(config: dict, pca_pool: PcaPool):
                 body.orientation = Orientation3D(
                     rc.get_pitch() * orientation_scale,
                     - rc.get_roll() * orientation_scale,
-                    - rc.get_slider_right() * orientation_scale
+                    0
                 )
 
             body.tick()
+            if visualizer:
+                visualizer.update(body)
 
             time.sleep(0.005)
     except KeyboardInterrupt:
         print("\nExiting...")
     finally:
         body.detach()
+        visualizer.finish()
 
 
 def normalize_rc_input(rc_input):
