@@ -77,7 +77,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     gait_type = Gait.Type.GAIT_5_1
     tail = Tail(config['tail'], pca_pool)
     gait = Gait(config['gait'], legs, gait_type)
-    body = Body(legs, tail, gait)
+    body = Body(legs, tail, gait, config['body'])
 
     rc = TcpRcReceiver(print_debug=True)
     translation_scale = 0.5
@@ -107,17 +107,22 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                     ).cube_to_sphere()
                 )
 
-                body.translation = Point3D(
-                    - rc.get_x2(),
-                    - rc.get_y2(),
-                    - rc.get_slider_right()
-                ) * translation_scale
-
-                body.orientation = Orientation3D(
-                    rc.get_pitch() * orientation_scale,
-                    - rc.get_roll() * orientation_scale,
-                    0
+                body.set_translation(
+                    Point3D(
+                        - rc.get_x2(),
+                        - rc.get_y2(),
+                        - rc.get_slider_right()
+                    ) * translation_scale
                 )
+
+                body.set_orientation(
+                    Orientation3D(
+                        rc.get_pitch() * orientation_scale,
+                        - rc.get_roll() * orientation_scale,
+                        0
+                    )
+                )
+
             elif DESKTOP:
                 gait.set_direction(Point3D(0, 0.5, 0))
 

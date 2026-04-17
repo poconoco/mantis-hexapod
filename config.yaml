@@ -6,10 +6,15 @@ tail:
     max_pulse: 2550
     multiplier: 1
 
+body:
+  translation_speed: 100
+  translation_acceleration: 300
+  tilt_speed_factor: 0.015
+
 gait:
-  steps_per_second: 1
-  step_length: 50
-  step_height: 50
+  steps_per_second: 0.75
+  step_length: 75
+  step_height: 100
 
 legs:
   - dof: 3
@@ -48,7 +53,7 @@ legs:
         multiplier: 1
     mirror_x: true
     speed: 2000
-    acceleration: 2000
+    acceleration: 4000
 
   - dof: 3
     side: right
@@ -86,13 +91,13 @@ legs:
         multiplier: -1
     mirror_x: false
     speed: 2000
-    acceleration: 2000
+    acceleration: 4000
 
   - dof: 3
     side: left
     order: 1
     origin: { x: -34.542, y: 34.542, z: 0 }
-    relative_rest_pos: { x: -100, y: 30, z: -120 }
+    relative_rest_pos: { x: -100, y: 70, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -124,13 +129,13 @@ legs:
         multiplier: -1
     mirror_x: true
     speed: 2000
-    acceleration: 2000
+    acceleration: 4000
 
   - dof: 3
     side: right
     order: 1
     origin: { x: 34.542, y: 34.542, z: 0 }
-    relative_rest_pos: { x: 100, y: 30, z: -120 }
+    relative_rest_pos: { x: 100, y: 70, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -162,13 +167,13 @@ legs:
         multiplier: 1
     mirror_x: false
     speed: 2000
-    acceleration: 2000
+    acceleration: 4000
 
   - dof: 4
     side: left
     order: 2
     origin: { x: -38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: -80, y: 200, z: -120 }
+    relative_rest_pos: { x: -80, y: 220, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -209,13 +214,13 @@ legs:
         multiplier: 1
     mirror_x: true
     speed: 2000
-    acceleration: 2000
+    acceleration: 4000
 
   - dof: 4
     side: right
     order: 2
     origin: { x: 38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: 80, y: 200, z: -120 }
+    relative_rest_pos: { x: 80, y: 220, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -256,4 +261,4 @@ legs:
         multiplier: 1
     mirror_x: false
     speed: 2000
-    acceleration: 2000
+    acceleration: 4000
