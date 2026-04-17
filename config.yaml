@@ -8,20 +8,20 @@ tail:
 
 body:
   translation_speed: 100
-  translation_acceleration: 300
+  translation_acceleration: 200
   tilt_speed_factor: 0.015
 
 gait:
   steps_per_second: 0.75
-  step_length: 75
-  step_height: 100
+  step_length: 50
+  step_height: 50
 
 legs:
   - dof: 3
     side: left
     order: 0
     origin: { x: -34.542, y: -34.542, z: 0 }
-    relative_rest_pos: { x: -100, y: -70, z: -120 }
+    relative_rest_pos: { x: -120, y: -100, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
@@ -59,7 +59,7 @@ legs:
     side: right
     order: 0
     origin: { x: 34.542, y: -34.542, z: 0 }
-    relative_rest_pos: { x: 100, y: -70, z: -120 }
+    relative_rest_pos: { x: 120, y: -100, z: -120 }
     coxa:
       angle_for_perpendicular: 0
       h_offset: 50.1
