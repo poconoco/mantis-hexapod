@@ -130,7 +130,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
             if visualizer:
                 visualizer.update(body)
 
-            time.sleep(0.005)
+            time.sleep(0.0005)
     except KeyboardInterrupt:
         print("\nExiting...")
     finally:
