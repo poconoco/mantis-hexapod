@@ -3,7 +3,16 @@ from adafruit_motor import servo
 
 from .pca_pool import PcaPool
 
-class Servo:
+
+class BaseServo:
+    def move(self, angle: Optional[float]):
+        pass
+
+    def detach(self):
+        pass
+
+
+class Servo(BaseServo):
     def __init__(self, pca_pool: PcaPool, servo_config: dict):
         pca = pca_pool.get_pca(servo_config['i2c_address'])
         self.servo = servo.Servo(

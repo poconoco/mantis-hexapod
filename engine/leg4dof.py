@@ -8,7 +8,7 @@ from .base_leg import BaseLeg
 
 
 class Leg4DOF(BaseLeg):
-    def __init__(self, leg_config: dict, pca_pool: PcaPool):
+    def __init__(self, leg_config: dict, pca_pool: PcaPool, create_servo_func):
         super().__init__(leg_config)
 
         if leg_config['dof'] != 4:
@@ -34,31 +34,31 @@ class Leg4DOF(BaseLeg):
         self._ik.femur_angle_for_coxa2_parallel = leg_config['femur']['angle_for_coxa2_parallel'] + coxa2_angle_physical_delta
         self._ik.tibia_angle_for_femur_parallel = leg_config['tibia']['angle_for_femur_parallel'] - angle_physical_delta
 
-        self._coxa1_servo = Servo(pca_pool, leg_config['coxa']['servo1'])
-        self._coxa2_servo = Servo(pca_pool, leg_config['coxa']['servo2'])
-        self._femur_servo = Servo(pca_pool, leg_config['femur']['servo'])
-        self._tibia_servo = Servo(pca_pool, leg_config['tibia']['servo'])
+        self._coxa1_servo = create_servo_func(pca_pool, leg_config['coxa']['servo1'])
+        self._coxa2_servo = create_servo_func(pca_pool, leg_config['coxa']['servo2'])
+        self._femur_servo = create_servo_func(pca_pool, leg_config['femur']['servo'])
+        self._tibia_servo = create_servo_func(pca_pool, leg_config['tibia']['servo'])
 
     def tick(self, reach_to: Point3D):
-        super().tick(reach_to)
+        reach_to = reach_to.copy()
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
             return
 
-        x_mul = -1 if self._mirror_x else 1
+        if self._mirror_x:
+            reach_to.x *= -1
 
-        self._smoother.set_target(Point3D(reach_to.x * x_mul, reach_to.y, reach_to.z))
+        self._smoother.set_target(reach_to)
         self._smoother.tick(now - self._prev_tick)
         self._prev_tick = now
 
         smoothed_point = self._smoother.get()
 
+        self.current_abs_pos = self.origin + self.relative_rest_pos + reach_to
+        self.smoothed_abs_pos = self.origin + self.relative_rest_pos + smoothed_point
+
         coxa1_angle, coxa2_angle, femur_angle, tibia_angle = self._ik.get_angles(smoothed_point)
-
-        #print(f'reach_to: {reach_to}, smoothed_point: {smoothed_point}')
-
-        #print(f'Angles: C1 {int(coxa1_angle)}, C2 {int(coxa2_angle)}, F {int(femur_angle)}, T {int(tibia_angle)}')
 
         self._coxa1_servo.move(coxa1_angle)
         self._coxa2_servo.move(coxa2_angle)

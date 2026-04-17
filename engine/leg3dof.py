@@ -3,12 +3,11 @@ import time
 from .py_kinematics.point3d import Point3D
 from .py_kinematics.ik3dof import IK3DOF
 from .utils.pca_pool import PcaPool
-from .utils.servo import Servo
 from .base_leg import BaseLeg
 
 
 class Leg3DOF(BaseLeg):
-    def __init__(self, leg_config: dict, pca_pool: PcaPool):
+    def __init__(self, leg_config: dict, pca_pool: PcaPool, create_servo_func):
         super().__init__(leg_config)
 
         if leg_config['dof'] != 3:
@@ -30,12 +29,12 @@ class Leg3DOF(BaseLeg):
         self._ik.tibia_angle_for_femur_parallel = leg_config['tibia']['angle_for_femur_parallel'] - \
             leg_config['tibia'].get('angle_physical_delta', 0.0) * leg_config['tibia'].get('multiplier', 1.0)
 
-        self._coxa_servo = Servo(pca_pool, leg_config['coxa']['servo'])
-        self._femur_servo = Servo(pca_pool, leg_config['femur']['servo'])
-        self._tibia_servo = Servo(pca_pool, leg_config['tibia']['servo'])
+        self._coxa_servo = create_servo_func(pca_pool, leg_config['coxa']['servo'])
+        self._femur_servo = create_servo_func(pca_pool, leg_config['femur']['servo'])
+        self._tibia_servo = create_servo_func(pca_pool, leg_config['tibia']['servo'])
 
     def tick(self, reach_to: Point3D):
-        super().tick(reach_to)
+        reach_to = reach_to.copy()
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
@@ -49,11 +48,11 @@ class Leg3DOF(BaseLeg):
         self._prev_tick = now
 
         smoothed_point = self._smoother.get()
-        #print(f'Smoothed point: {smoothed_point}')
+
+        self.current_abs_pos = self.origin + self.relative_rest_pos + reach_to
+        self.smoothed_abs_pos = self.origin + self.relative_rest_pos + smoothed_point
 
         coxa_angle, femur_angle, tibia_angle = self._ik.get_angles(smoothed_point)
-
-        # print(f'C: {coxa_angle}, F:{femur_angle}, T:{tibia_angle}')
 
         self._coxa_servo.move(coxa_angle)
         self._femur_servo.move(femur_angle)
