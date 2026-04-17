@@ -34,14 +34,10 @@ class Leg3DOF(BaseLeg):
         self._tibia_servo = create_servo_func(pca_pool, leg_config['tibia']['servo'])
 
     def tick(self, reach_to: Point3D):
-        reach_to = reach_to.copy()
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
             return
-
-        if self._mirror_x:
-            reach_to.x *= -1
 
         self._smoother.set_target(reach_to)
         self._smoother.tick(now - self._prev_tick)
@@ -49,9 +45,12 @@ class Leg3DOF(BaseLeg):
 
         smoothed_point = self._smoother.get()
 
-        self.current_abs_pos = self.origin + self.relative_rest_pos + reach_to
+        self.abs_pos = self.origin + self.relative_rest_pos + reach_to
         self.smoothed_abs_pos = self.origin + self.relative_rest_pos + smoothed_point
 
+        smoothed_point = smoothed_point.copy()
+        if self._mirror_x:
+            smoothed_point.x *= -1
         coxa_angle, femur_angle, tibia_angle = self._ik.get_angles(smoothed_point)
 
         self._coxa_servo.move(coxa_angle)

@@ -10,7 +10,7 @@ class Visualizer:
 
     def update(self, body):
 
-        floor_z = min((leg.current_abs_pos.z for leg in body.legs), default=0.0) - 5
+        floor_z = min((leg.smoothed_abs_pos.z for leg in body.legs), default=0.0) - 5
 
         self.ax.cla()
         self.ax.set_proj_type('persp', focal_length=0.4)
@@ -20,17 +20,18 @@ class Visualizer:
         self.ax.set_xlabel('X Axis')
         self.ax.set_ylabel('Y Axis')
         self.ax.set_zlabel('Z Axis')
-        self.scatter_points([leg.current_abs_pos for leg in body.legs])
+        self.scatter_points([leg.abs_pos for leg in body.legs], alpha=0.25)
+        self.scatter_points([leg.smoothed_abs_pos for leg in body.legs])
 
         # Shadow emulation
-        self.scatter_points([Point3D(leg.current_abs_pos.x, leg.current_abs_pos.y, floor_z) for leg in body.legs], color='gray')
+        self.scatter_points([Point3D(leg.smoothed_abs_pos.x, leg.smoothed_abs_pos.y, floor_z) for leg in body.legs], color='gray')
         plt.pause(0.00001)
 
     def finish(self):
         plt.ioff()
         plt.close('all')
 
-    def scatter_points(self, points: list[Point3D], color: str = 'red', size: int = 50):
+    def scatter_points(self, points: list[Point3D], color: str = 'red', size: int = 50, alpha: float = 1.0):
         if not points:
             return
 
@@ -38,5 +39,5 @@ class Visualizer:
         ys = [p.y for p in points]
         zs = [p.z for p in points]
 
-        self.ax.scatter(xs, ys, zs, c=color, marker='o', s=size)
+        self.ax.scatter(xs, ys, zs, c=color, marker='o', s=size, alpha=alpha)
 
