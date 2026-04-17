@@ -130,7 +130,8 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
         print("\nExiting...")
     finally:
         body.detach()
-        visualizer.finish()
+        if visualizer:
+            visualizer.finish()
 
 
 def normalize_rc_input(rc_input):

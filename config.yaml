@@ -9,7 +9,7 @@ tail:
 gait:
   steps_per_second: 2
   step_length: 100
-  step_height: 100
+  step_height: 50
 
 legs:
   - dof: 3
@@ -47,8 +47,8 @@ legs:
         max_pulse: 2480
         multiplier: 1
     mirror_x: true
-    speed: 250
-    acceleration: 200
+    speed: 500
+    acceleration: 1000
 
   - dof: 3
     side: right
@@ -85,8 +85,8 @@ legs:
         max_pulse: 2460
         multiplier: -1
     mirror_x: false
-    speed: 250
-    acceleration: 200
+    speed: 500
+    acceleration: 1000
 
   - dof: 3
     side: left
@@ -123,8 +123,8 @@ legs:
         max_pulse: 2450
         multiplier: -1
     mirror_x: true
-    speed: 250
-    acceleration: 200
+    speed: 500
+    acceleration: 1000
 
   - dof: 3
     side: right
@@ -161,8 +161,8 @@ legs:
         max_pulse: 2390
         multiplier: 1
     mirror_x: false
-    speed: 250
-    acceleration: 200
+    speed: 500
+    acceleration: 1000
 
   - dof: 4
     side: left
@@ -209,7 +209,7 @@ legs:
         multiplier: 1
     mirror_x: true
     speed: 500
-    acceleration: 400
+    acceleration: 1000
 
   - dof: 4
     side: right
@@ -256,4 +256,4 @@ legs:
         multiplier: 1
     mirror_x: false
     speed: 500
-    acceleration: 400
+    acceleration: 1000
