@@ -2,8 +2,7 @@ import time
 
 from .py_kinematics.point3d import Point3D
 from .py_kinematics.ik4dof import IK4DOF
-from .utils.pca_pool import PcaPool
-from .utils.servo import Servo
+from .servo_utils.pca_pool import PcaPool
 from .base_leg import BaseLeg
 
 

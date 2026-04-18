@@ -1,6 +1,5 @@
 import math
 
-from .base_leg import BaseLeg
 from .py_kinematics.point3d import Point3D
 
 
@@ -31,7 +30,7 @@ class Stepper:
                 z
             )
         else:
-            raise ValueError(f"Invalid cycle_pos, leg: {leg_cycle_pos}, global: {global_cycle_pos}")
+            raise ValueError(f'Invalid cycle_pos, leg: {leg_cycle_pos}, global: {global_cycle_pos}')
 
     def _normalize_cycle_pos(self, cycle_pos: float):
         while cycle_pos >= self.cycle_length:

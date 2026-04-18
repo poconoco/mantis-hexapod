@@ -1,8 +1,8 @@
-from .utils.pca_pool import PcaPool
 from .base_leg import BaseLeg
 from .leg3dof import Leg3DOF
 from .leg4dof import Leg4DOF
-from .utils.servo import BaseServo, Servo
+from .servo_utils.servo import BaseServo, Servo
+from .servo_utils.pca_pool import PcaPool
 
 
 def create_servo(pca_pool: PcaPool, config: dict):

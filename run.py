@@ -7,8 +7,8 @@ from system_detector import DESKTOP
 from visualizer import Visualizer
 from engine.py_kinematics.point3d import Point3D
 from engine.py_kinematics.orientation3d import Orientation3D
-from engine.utils.pca_pool import PcaPool
-from engine.utils.servo import Servo
+from engine.servo_utils.pca_pool import PcaPool
+from engine.servo_utils.servo import Servo
 from engine.leg import create_leg
 from engine.tail import Tail
 from engine.gait import Gait
@@ -139,7 +139,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     except KeyboardInterrupt:
         print('\nExiting...')
     except Exception as e:
-        print(f'Stopped for exception: {e}')
+        print(f'Stopped: {e}')
     finally:
         body.detach()
         if visualizer:
