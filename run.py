@@ -67,6 +67,9 @@ def main():
         print("\nExiting...")
 
 
+class VisualizerStopException(Exception):
+    pass
+
 
 def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     legs = []
@@ -76,7 +79,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
 
     gait_type = Gait.Type.GAIT_5_1
     tail = Tail(config['tail'], pca_pool)
-    gait = Gait(config['gait'], legs, gait_type)
+    gait = Gait(config['gait'], legs, gait_type, True)
     body = Body(legs, tail, gait, config['body'])
 
     rc = TcpRcReceiver(print_debug=True)
@@ -101,14 +104,14 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                 prev_switch_e_state = new_switch_e_state
 
                 if gait_type != gait.get_type():
-                    gait.set_type(gait_type)
+                    gait.set_gait(gait_type, False)
 
                 gait.set_direction(
                     Point3D(
                         normalize_rc_input(rc.get_x1()),
                         normalize_rc_input(rc.get_y1()),
                         0
-                    ).cube_to_sphere()
+                    )
                 )
 
                 body.set_translation(
@@ -133,13 +136,13 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
             body.tick()
             if visualizer:
                 if not visualizer.update(body):
-                    raise Exception('Visualizer stopped')
+                    raise VisualizerStopException()
 
             time.sleep(0.0005)
     except KeyboardInterrupt:
         print('\nExiting...')
-    except Exception as e:
-        print(f'Stopped: {e}')
+    except VisualizerStopException as e:
+        print('Visualizer stopped')
     finally:
         body.detach()
         if visualizer:

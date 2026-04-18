@@ -8,6 +8,7 @@ from .py_kinematics.orientation3d import Orientation3D
 from .py_kinematics.orientation_smoother import OrientationSmoother
 from .py_kinematics.smoother3d import Smoother3D
 
+
 class Body:
     legs: list[Leg]
     tail: Tail
@@ -18,7 +19,7 @@ class Body:
         self.legs = legs
         self.tail = tail
         self.gait = gait
-        
+
         self._prev_tick = None
         self._orientation = OrientationSmoother(Orientation3D(), config['tilt_speed_factor'])
         self._translation = Smoother3D(Point3D(), config['translation_speed'], config['translation_acceleration'])

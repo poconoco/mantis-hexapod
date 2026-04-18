@@ -45,6 +45,10 @@ class Visualizer:
             linewidth=1.5
         )
 
+        if body.gait.is_circular():
+            # Turn rotation center
+            any_stepper = next(iter(body.gait._steppers.values()))
+            self.scatter_points([Point3D(any_stepper.cx, 0, floor_z)], color='green')
 
         self.fig.canvas.draw_idle()
         self.fig.canvas.flush_events()
