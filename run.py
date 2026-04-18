@@ -78,8 +78,9 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
         legs.append(leg)
 
     gait_type = Gait.Type.GAIT_5_1
+    gait_circular = True
     tail = Tail(config['tail'], pca_pool)
-    gait = Gait(config['gait'], legs, gait_type, True)
+    gait = Gait(config['gait'], legs, gait_type, gait_circular)
     body = Body(legs, tail, gait, config['body'])
 
     rc = TcpRcReceiver(print_debug=True)
@@ -95,7 +96,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     try:
         while True:
             if rc.is_connected():
-                rc.send(f'Gait: {gait.get_type().name}')
+                rc.send(f'Gait: {gait.get_type().name}\n({("circular" if gait.is_circular() else "linear")})')
 
                 new_switch_e_state = rc.get_switch_e()
                 if not new_switch_e_state and prev_switch_e_state:
@@ -103,8 +104,10 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                     gait_type = gait_type.next()
                 prev_switch_e_state = new_switch_e_state
 
-                if gait_type != gait.get_type():
-                    gait.set_gait(gait_type, False)
+                gait_circular = not rc.get_switch_a()
+
+                if gait_type != gait.get_type() or gait_circular != gait.is_circular():
+                    gait.set_gait(gait_type, gait_circular)
 
                 gait.set_direction(
                     Point3D(
