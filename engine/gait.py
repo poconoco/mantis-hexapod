@@ -93,6 +93,9 @@ class Gait:
         self._direction = direction
         self._normalized_step_direction = self._direction.normalized() * self._step_length
 
+    def get_direction(self):
+        return self._direction
+
     def tick(self):
         now = time.time()
         if self._prev_tick is None:

@@ -25,8 +25,6 @@ class Visualizer:
         self.ax.set_ylabel('Y Axis')
         self.ax.set_zlabel('Z Axis')
 
-
-
         # The unsmoother leg tip
         self.scatter_points([leg.abs_pos for leg in body.legs], alpha=0.25)
 
@@ -35,6 +33,18 @@ class Visualizer:
 
         # Shadow emulation
         self.scatter_points([Point3D(leg.smoothed_abs_pos.x, leg.smoothed_abs_pos.y, floor_z) for leg in body.legs], color='gray')
+
+        # Walk direction arrow
+        self.scatter_points([Point3D(0, 0, 0)], color='blue')
+        step_dir = body.gait.get_direction() * 300
+        self.ax.quiver(
+            0, 0, 0, 
+            step_dir.x, step_dir.y, step_dir.z, 
+            color='blue', 
+            arrow_length_ratio=0.2,  # Size of the arrow head relative to length
+            linewidth=1.5
+        )
+
 
         self.fig.canvas.draw_idle()
         self.fig.canvas.flush_events()

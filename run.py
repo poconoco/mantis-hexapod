@@ -84,7 +84,11 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     orientation_scale = 0.2
     prev_switch_e_state = False
 
-    print("\nPress Ctrl+C key to exit...")
+    if DESKTOP:
+        print("\nClose matplotly window to exit...")
+    else:
+        print("\nPress Ctrl+C key to exit...")
+
     try:
         while True:
             if rc.is_connected():
