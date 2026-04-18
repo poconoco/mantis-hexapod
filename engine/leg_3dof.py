@@ -3,10 +3,10 @@ import time
 from .py_kinematics.point3d import Point3D
 from .py_kinematics.ik3dof import IK3DOF
 from .servo_utils.pca_pool import PcaPool
-from .base_leg import BaseLeg
+from .leg import Leg
 
 
-class Leg3DOF(BaseLeg):
+class Leg3DOF(Leg):
     def __init__(self, leg_config: dict, pca_pool: PcaPool, create_servo_func):
         super().__init__(leg_config)
 

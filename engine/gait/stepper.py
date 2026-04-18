@@ -1,9 +1,11 @@
 import math
 
-from .py_kinematics.point3d import Point3D
+from abc import ABC, abstractmethod
+
+from ..py_kinematics.point3d import Point3D
 
 
-class Stepper:
+class Stepper(ABC):
     def __init__(self, step_height: float, cycle_length: float, leg_group_count: int, leg_phase_offset: float):
         self._step_height = step_height
         self.cycle_length = cycle_length
@@ -19,18 +21,20 @@ class Stepper:
 
         if self._is_in_down_phase(leg_cycle_pos):
             m = self._get_get_down_phase_multiplier(leg_cycle_pos)
-            return Point3D(- direction.x * m, - direction.y * m, 0)
+            x, y = self.offset_step(- direction.x, - direction.y, m)
+            return Point3D(x, y, 0)
         elif self._is_in_up_phase(leg_cycle_pos):
             m = self._get_up_phase_multiplier(leg_cycle_pos)
             angle = (math.pi / 2) - math.pi * m
+            x, y = self.offset_step(direction.x, direction.y, m)
             z = math.sin(angle) * self._step_height
-            return Point3D(
-                direction.x * m,
-                direction.y * m,
-                z
-            )
+            return Point3D(x, y, z)
         else:
             raise ValueError(f'Invalid cycle_pos, leg: {leg_cycle_pos}, global: {global_cycle_pos}')
+
+    @abstractmethod
+    def offset_step(self, x: float, y: float, multiplier: float) -> tuple[float, float]:
+        pass
 
     def _normalize_cycle_pos(self, cycle_pos: float):
         while cycle_pos >= self.cycle_length:

@@ -2,9 +2,9 @@ import time
 
 from enum import Enum
 
-from .base_leg import BaseLeg
-from .stepper import Stepper
-from .py_kinematics.point3d import Point3D
+from ..leg import Leg
+from .stepper_linear import StepperLinear
+from ..py_kinematics.point3d import Point3D
 
 
 class Gait:
@@ -19,7 +19,7 @@ class Gait:
             next_index = (current_index + 1) % len(members)
             return members[next_index]
         
-    def __init__(self, config: dict, legs: list[BaseLeg], initial_type: Type):
+    def __init__(self, config: dict, legs: list[Leg], initial_type: Type):
         self._steps_per_second = config['steps_per_second']
         self._step_length = config['step_length']
         self._step_height = config['step_height']
@@ -68,7 +68,7 @@ class Gait:
                 raise ValueError(f'Unexpected gait type: {type}')
 
             leg_phase_offset = (self._cycle_length / leg_group_count) * phase_index
-            stepper = Stepper(
+            stepper = StepperLinear(
                 self._step_height,
                 cycle_length=self._cycle_length,
                 leg_group_count=leg_group_count,
@@ -119,7 +119,7 @@ class Gait:
             cycle_pos_delta = dt * self._steps_per_second * self._direction.magnitude() * self._cycle_length
             self._step_cycle_pos = self._normalize_cycle_pos(self._step_cycle_pos + cycle_pos_delta)
 
-    def get_tip_offset(self, leg: BaseLeg) -> Point3D:
+    def get_tip_offset(self, leg: Leg) -> Point3D:
         if self._stationary:
             return Point3D()
         else:
@@ -131,6 +131,6 @@ class Gait:
 
         return cycle_pos
 
-    def _is_leg_a(self, leg: BaseLeg) -> bool:
+    def _is_leg_a(self, leg: Leg) -> bool:
         return leg.config['side'] == 'left' and leg.config['order'] % 2 == 0 \
             or leg.config['side'] == 'right' and leg.config['order'] % 2 == 1

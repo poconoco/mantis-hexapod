@@ -11,7 +11,7 @@ from engine.servo_utils.pca_pool import PcaPool
 from engine.servo_utils.servo import Servo
 from engine.leg import create_leg
 from engine.tail import Tail
-from engine.gait import Gait
+from engine.gait.gait import Gait
 from engine.body import Body
 from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
 
