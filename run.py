@@ -128,11 +128,14 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
 
             body.tick()
             if visualizer:
-                visualizer.update(body)
+                if not visualizer.update(body):
+                    raise Exception('Visualizer stopped')
 
             time.sleep(0.0005)
     except KeyboardInterrupt:
-        print("\nExiting...")
+        print('\nExiting...')
+    except Exception as e:
+        print(f'Stopped for exception: {e}')
     finally:
         body.detach()
         if visualizer:
