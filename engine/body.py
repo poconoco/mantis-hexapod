@@ -1,3 +1,4 @@
+import math
 import time
 
 from .leg import Leg
@@ -46,7 +47,7 @@ class Body:
 
             leg.tick(tip - leg.origin)
 
-        self.tail.tick(orientation.pitch * 2)
+        self.tail.tick(- orientation.pitch * 2 - 60)
 
     def set_walk_direction(self, direction: Point3D):
         self.gait(direction)

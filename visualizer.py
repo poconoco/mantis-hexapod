@@ -1,4 +1,7 @@
-import matplotlib.pyplot as plt
+from system_detector import DESKTOP
+
+if DESKTOP:
+    import matplotlib.pyplot as plt
 
 from engine.py_kinematics.point3d import Point3D
 

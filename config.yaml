@@ -173,7 +173,7 @@ legs:
     side: left
     order: 2
     origin: { x: -38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: -80, y: 220, z: -120 }
+    relative_rest_pos: { x: -150, y: 150, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -220,7 +220,7 @@ legs:
     side: right
     order: 2
     origin: { x: 38.70, y: 162.121, z: 0 }
-    relative_rest_pos: { x: 80, y: 220, z: -120 }
+    relative_rest_pos: { x: 150, y: 150, z: -120 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
