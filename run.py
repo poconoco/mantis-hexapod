@@ -85,7 +85,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
 
     rc = UdpRcReceiver(print_debug=True)
     translation_scale = 0.5
-    stand_mode_front_legs_translation_scale = 0.5
+    stance_mode_front_legs_translation_scale = 0.5
     orientation_scale = 0.2
     prev_switch_e_state = False
 
@@ -110,20 +110,20 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                 if gait_type != gait.get_type() or gait_circular != gait.is_circular():
                     gait.set_gait(gait_type, gait_circular)
 
-                stand_mode = rc.get_switch_b()
-                body.set_stand_mode(stand_mode)
-                if stand_mode:
-                    body.set_stand_mode_front_positions(
+                stance_mode = rc.get_switch_b()
+                body.set_stance_mode(stance_mode)
+                if stance_mode:
+                    body.set_stance_mode_front_positions(
                         Point3D(
                             rc.get_slider_left(),
                             rc.get_x1(),
                             rc.get_y1(),
-                        ) * stand_mode_front_legs_translation_scale,
+                        ) * stance_mode_front_legs_translation_scale,
                         Point3D(
                             rc.get_slider_right(),
                             rc.get_x2(),
                             rc.get_y2(),
-                        ) * stand_mode_front_legs_translation_scale
+                        ) * stance_mode_front_legs_translation_scale
                     )
                 else:
                     gait.set_direction(

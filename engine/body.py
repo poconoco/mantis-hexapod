@@ -21,7 +21,7 @@ class Body:
         self.legs = legs
         self.tail = tail
         self.gait = gait
-        self._stand_mode = False
+        self._stance_mode = False
 
         self._prev_tick = None
         self._base_orientation = Orientation3D()
@@ -50,7 +50,7 @@ class Body:
             tip = tip.rotate(orientation, leg.origin)
             tip += translation
 
-            if self._stand_mode:
+            if self._stance_mode:
                 if leg.order == 2:  # order 2 are front legs
                     stand_pos = self._stand_left_pos if leg.side == 'left' else self._stand_right_pos
                     tip += leg.stand_pos_offset + stand_pos
@@ -62,17 +62,17 @@ class Body:
 
         self.tail.tick(- orientation.pitch * 2 - 60)
 
-    def set_stand_mode(self, stand_mode: bool):
-        if self._stand_mode == stand_mode:
+    def set_stance_mode(self, stance_mode: bool):
+        if self._stance_mode == stance_mode:
             return
 
-        self._stand_mode = stand_mode
+        self._stance_mode = stance_mode
         self.set_orientation()
 
-    def is_stand_mode(self) -> bool:
-        return self._stand_mode
+    def is_stance_mode(self) -> bool:
+        return self._stance_mode
 
-    def set_stand_mode_front_positions(self, left_pos: Point3D, right_pos: Point3D):
+    def set_stance_mode_front_positions(self, left_pos: Point3D, right_pos: Point3D):
         self._stand_left_pos = left_pos
         self._stand_right_pos = right_pos
 
@@ -86,7 +86,7 @@ class Body:
         if orientation is not None:
              self._base_orientation = orientation
 
-        if self._stand_mode:
+        if self._stance_mode:
             target_orientation = Orientation3D.copy(self._base_orientation)
             target_orientation.pitch -= self._stand_pos_incline
         else:

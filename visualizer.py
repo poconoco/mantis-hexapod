@@ -40,7 +40,7 @@ class Visualizer:
         # Body center/origin
         self.scatter_points([Point3D(0, 0, 0)], color='blue')
 
-        if not body.is_stand_mode():
+        if not body.is_stance_mode():
             # Walk direction arrow
             step_dir = body.gait.get_direction() * 300
             self.ax.quiver(
