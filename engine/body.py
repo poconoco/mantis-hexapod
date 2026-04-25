@@ -48,6 +48,7 @@ class Body:
         for leg in self.legs:
             tip = leg.origin + leg.relative_rest_pos
             tip = tip.rotate(orientation, leg.origin)
+            tip += translation
 
             if self._stand_mode:
                 if leg.order == 2:  # order 2 are front legs
@@ -55,7 +56,6 @@ class Body:
                     tip += leg.stand_pos_offset + stand_pos
             else:
                 # Translation anf gait are only applied in non-stand mode
-                tip += translation
                 tip += self.gait.get_tip_offset(leg)
 
             leg.tick(tip - leg.origin)

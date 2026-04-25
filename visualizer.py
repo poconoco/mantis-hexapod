@@ -37,9 +37,11 @@ class Visualizer:
         # Shadow emulation
         self.scatter_points([Point3D(leg.smoothed_abs_pos.x, leg.smoothed_abs_pos.y, floor_z) for leg in body.legs], color='gray')
 
+        # Body center/origin
+        self.scatter_points([Point3D(0, 0, 0)], color='blue')
+
         if not body.is_stand_mode():
             # Walk direction arrow
-            self.scatter_points([Point3D(0, 0, 0)], color='blue')
             step_dir = body.gait.get_direction() * 300
             self.ax.quiver(
                 0, 0, 0, 

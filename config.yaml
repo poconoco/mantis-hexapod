@@ -10,7 +10,7 @@ body:
   translation_speed: 100
   translation_acceleration: 200
   tilt_speed_factor: 0.02
-  stand_pos_incline: 10
+  stand_pos_incline: 45
 
 gait:
   steps_per_second: 0.5

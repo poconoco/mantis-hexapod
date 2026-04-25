@@ -110,36 +110,37 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                 if gait_type != gait.get_type() or gait_circular != gait.is_circular():
                     gait.set_gait(gait_type, gait_circular)
 
-                gait.set_direction(
-                    Point3D(
-                        normalize_rc_input(rc.get_x1()),
-                        normalize_rc_input(rc.get_y1()),
-                        0
+                stand_mode = rc.get_switch_b()
+                body.set_stand_mode(stand_mode)
+                if stand_mode:
+                    body.set_stand_mode_front_positions(
+                        Point3D(
+                            rc.get_slider_left(),
+                            rc.get_x1(),
+                            rc.get_y1(),
+                        ) * stand_mode_front_legs_translation_scale,
+                        Point3D(
+                            rc.get_slider_right(),
+                            rc.get_x2(),
+                            rc.get_y2(),
+                        ) * stand_mode_front_legs_translation_scale
                     )
-                )
+                else:
+                    gait.set_direction(
+                        Point3D(
+                            normalize_rc_input(rc.get_x1()),
+                            normalize_rc_input(rc.get_y1()),
+                            0
+                        )
+                    )
 
-                body.set_stand_mode(rc.get_switch_b())
-
-                body.set_stand_mode_front_positions(
-                    Point3D(
-                        rc.get_x1(),
-                        0,
-                        rc.get_y1(),
-                    ) * stand_mode_front_legs_translation_scale,
-                    Point3D(
-                        rc.get_x2(),
-                        0,
-                        rc.get_y2(),
-                    ) * stand_mode_front_legs_translation_scale
-                )
-
-                body.set_translation(
-                    Point3D(
-                        - rc.get_x2(),
-                        - rc.get_y2(),
-                        - rc.get_slider_right()
-                    ) * translation_scale
-                )
+                    body.set_translation(
+                        Point3D(
+                            - rc.get_x2(),
+                            - rc.get_y2(),
+                            - rc.get_slider_right()
+                        ) * translation_scale
+                    )
 
                 body.set_orientation(
                     Orientation3D(
