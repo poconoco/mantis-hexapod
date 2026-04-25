@@ -65,7 +65,7 @@ class Gait:
                     raise ValueError(f'Unexpected leg: side={leg.side}, order={leg.order}')
             elif type == Gait.Type.GAIT_5_1:
                 leg_group_count = 6
-                phase_index = i
+                phase_index = leg.order + (0 if leg.side == 'left' else 3)
 
             else:
                 raise ValueError(f'Unexpected gait type: {type}')
