@@ -37,21 +37,22 @@ class Visualizer:
         # Shadow emulation
         self.scatter_points([Point3D(leg.smoothed_abs_pos.x, leg.smoothed_abs_pos.y, floor_z) for leg in body.legs], color='gray')
 
-        # Walk direction arrow
-        self.scatter_points([Point3D(0, 0, 0)], color='blue')
-        step_dir = body.gait.get_direction() * 300
-        self.ax.quiver(
-            0, 0, 0, 
-            step_dir.x, step_dir.y, step_dir.z, 
-            color='blue', 
-            arrow_length_ratio=0.2,  # Size of the arrow head relative to length
-            linewidth=1.5
-        )
+        if not body.is_stand_mode():
+            # Walk direction arrow
+            self.scatter_points([Point3D(0, 0, 0)], color='blue')
+            step_dir = body.gait.get_direction() * 300
+            self.ax.quiver(
+                0, 0, 0, 
+                step_dir.x, step_dir.y, step_dir.z, 
+                color='blue', 
+                arrow_length_ratio=0.2,  # Size of the arrow head relative to length
+                linewidth=1.5
+            )
 
-        if body.gait.is_circular():
-            # Turn rotation center
-            any_stepper = next(iter(body.gait._steppers.values()))
-            self.scatter_points([Point3D(any_stepper.cx, 0, floor_z)], color='green')
+            # Turn rotation center if cilcular walk engaged
+            if body.gait.is_circular():
+                any_stepper = next(iter(body.gait._steppers.values()))
+                self.scatter_points([Point3D(any_stepper.cx, 0, floor_z)], color='green')
 
         self.fig.canvas.draw_idle()
         self.fig.canvas.flush_events()

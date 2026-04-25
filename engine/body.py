@@ -21,9 +21,9 @@ class Body:
         self.legs = legs
         self.tail = tail
         self.gait = gait
+        self._stand_mode = False
 
         self._prev_tick = None
-        self._stand_mode = False
         self._base_orientation = Orientation3D()
         self._orientation = OrientationSmoother(Orientation3D(), config['tilt_speed_factor'])
         self._translation = Smoother3D(Point3D(), config['translation_speed'], config['translation_acceleration'])
@@ -68,6 +68,9 @@ class Body:
 
         self._stand_mode = stand_mode
         self.set_orientation()
+
+    def is_stand_mode(self) -> bool:
+        return self._stand_mode
 
     def set_stand_mode_front_positions(self, left_pos: Point3D, right_pos: Point3D):
         self._stand_left_pos = left_pos
