@@ -13,7 +13,7 @@ from engine.leg import create_leg
 from engine.tail import Tail
 from engine.gait.gait import Gait
 from engine.body import Body
-from engine.bt_remote.receivers.python.tcp_rc_receiver import TcpRcReceiver
+from engine.bt_remote.receivers.python.udp_rc_receiver import UdpRcReceiver
 
 def main():
 
@@ -83,7 +83,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
     gait = Gait(config['gait'], legs, gait_type, gait_circular)
     body = Body(legs, tail, gait, config['body'])
 
-    rc = TcpRcReceiver(print_debug=True)
+    rc = UdpRcReceiver(print_debug=True)
     translation_scale = 0.5
     stand_mode_front_legs_translation_scale = 0.5
     orientation_scale = 0.2
