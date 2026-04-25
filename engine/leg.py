@@ -17,6 +17,7 @@ class Leg(ABC):
         self.order = self.config['order']
         self.origin = Point3D.from_dict(self.config['origin'])
         self.relative_rest_pos = Point3D.from_dict(self.config['relative_rest_pos'])
+        self.stand_pos_offset = Point3D.from_dict(self.config.get('stand_pos_offset', {'x': 0, 'y': 0, 'z': 0}))
         self.abs_pos = self.origin + self.relative_rest_pos
         self.smoothed_abs_pos = self.abs_pos
 

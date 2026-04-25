@@ -85,6 +85,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
 
     rc = TcpRcReceiver(print_debug=True)
     translation_scale = 0.5
+    stand_mode_front_legs_translation_scale = 0.5
     orientation_scale = 0.2
     prev_switch_e_state = False
 
@@ -115,6 +116,21 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                         normalize_rc_input(rc.get_y1()),
                         0
                     )
+                )
+
+                body.set_stand_mode(rc.get_switch_b())
+
+                body.set_stand_mode_front_positions(
+                    Point3D(
+                        rc.get_x1(),
+                        0,
+                        rc.get_y1(),
+                    ) * stand_mode_front_legs_translation_scale,
+                    Point3D(
+                        rc.get_x2(),
+                        0,
+                        rc.get_y2(),
+                    ) * stand_mode_front_legs_translation_scale
                 )
 
                 body.set_translation(
