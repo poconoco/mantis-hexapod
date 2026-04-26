@@ -27,7 +27,7 @@ class Leg(ABC):
         )
 
     @abstractmethod
-    def tick(self, reach_to: Point3D):
+    def tick(self, reach_to: Point3D, dt_factor: float = 1.0):
         pass
 
     @abstractmethod

@@ -32,14 +32,15 @@ class Body:
         self._stand_pos_incline = config['stand_pos_incline']
         self._stand_pos_offset = Point3D.from_dict(config['stand_pos_offset'])
 
-    def tick(self):
+    def tick(self, dt_factor: float = 1.0):
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
             return
-        dt = now - self._prev_tick        
-        
-        self.gait.tick()
+        dt = (now - self._prev_tick) * dt_factor
+        self._prev_tick = now
+
+        self.gait.tick(dt_factor)
         self._translation.tick(dt)
         self._orientation.tick(dt)
 
@@ -60,19 +61,28 @@ class Body:
                 # Translation anf gait are only applied in non-stand mode
                 tip += self.gait.get_tip_offset(leg)
 
-            leg.tick(tip - leg.origin)
+            leg.tick(tip - leg.origin, dt_factor)
 
         if self._stance_mode:
-            self.tail.tick(orientation.pitch)
+            self.tail.tick(orientation.pitch, dt_factor)
         else:
-            self.tail.tick(orientation.pitch * -2 - 60)
+            self.tail.tick(orientation.pitch * -2 - 60, dt_factor)
 
-    def set_stance_mode(self, stance_mode: bool):
+    def set_stance_mode(self, stance_mode: bool, tick_callback = None):
         if self._stance_mode == stance_mode:
             return
 
         self._stance_mode = stance_mode
         self.set_orientation()
+
+        start = time.time()
+        while True:
+            self.tick(0.3)
+            if tick_callback:
+                tick_callback()
+            time.sleep(0.01)
+            if time.time() - start > 2.0:
+                break
 
     def is_stance_mode(self) -> bool:
         return self._stance_mode

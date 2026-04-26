@@ -38,14 +38,14 @@ class Leg4DOF(Leg):
         self._femur_servo = create_servo_func(pca_pool, leg_config['femur']['servo'])
         self._tibia_servo = create_servo_func(pca_pool, leg_config['tibia']['servo'])
 
-    def tick(self, reach_to: Point3D):
+    def tick(self, reach_to: Point3D, dt_factor: float = 1.0):
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
             return
 
         self._smoother.set_target(reach_to)
-        self._smoother.tick(now - self._prev_tick)
+        self._smoother.tick((now - self._prev_tick) * dt_factor)
         self._prev_tick = now
 
         smoothed_point = self._smoother.get()

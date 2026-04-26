@@ -57,6 +57,11 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
         print("\nPress Ctrl+C key to exit...")
 
     try:
+        def visualization_tick():
+            if visualizer:
+                if not visualizer.update(body):
+                    raise VisualizerStopException()
+
         while True:
             if rc.is_connected():
                 rc.send(f'Gait: {gait.get_type().name}\n({("circular" if gait.is_circular() else "linear")})')
@@ -73,7 +78,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                     gait.set_gait(gait_type, gait_circular)
 
                 stance_mode = rc.get_switch_b()
-                body.set_stance_mode(stance_mode)
+                body.set_stance_mode(stance_mode, tick_callback=visualization_tick)
                 if stance_mode:
                     body.set_stance_mode_front_positions(
                         Point3D(
@@ -116,9 +121,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                 gait.set_direction(Point3D(0, 0.5, 0))
 
             body.tick()
-            if visualizer:
-                if not visualizer.update(body):
-                    raise VisualizerStopException()
+            visualization_tick()
 
             time.sleep(0.0005)
     except KeyboardInterrupt:

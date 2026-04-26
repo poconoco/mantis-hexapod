@@ -23,7 +23,7 @@ class Tail:
             200, # Acceleration
         )
 
-    def tick(self, angle: float):
+    def tick(self, angle: float, dt_factor: float = 1.0):
         if not self._servo:
             return
 
@@ -33,7 +33,7 @@ class Tail:
             return
 
         self._smoother.set_target(Point3D(angle, 0, 0))
-        self._smoother.tick(now - self._prev_tick)
+        self._smoother.tick((now - self._prev_tick) * dt_factor)
         self._prev_tick = now
 
         smoothed_angle = self._smoother.get().x

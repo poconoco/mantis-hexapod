@@ -110,7 +110,7 @@ class Gait:
     def get_direction(self):
         return self._direction
 
-    def tick(self):
+    def tick(self, dt_factor: float = 1.0):
         now = time.time()
         if self._prev_tick is None:
             self._prev_tick = now
@@ -127,7 +127,7 @@ class Gait:
             self._step_cycle_pos = self._rest_cycle_pos
             self._stationary = True
         else:
-            dt = now - self._prev_tick
+            dt = (now - self._prev_tick) * dt_factor
             self._prev_tick = now
 
             if self._circular:
