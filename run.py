@@ -98,9 +98,9 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
 
                     body.set_translation(
                         Point3D(
-                            - rc.get_x2(),
-                            - rc.get_y2(),
-                            - rc.get_slider_right()
+                            rc.get_x2(),
+                            rc.get_y2(),
+                            rc.get_slider_right()
                         ) * translation_scale
                     )
 

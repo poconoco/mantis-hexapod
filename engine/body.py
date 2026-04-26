@@ -30,6 +30,7 @@ class Body:
         self._stand_left_pos = Point3D()
         self._stand_right_pos = Point3D()
         self._stand_pos_incline = config['stand_pos_incline']
+        self._stand_pos_offset = Point3D.from_dict(config['stand_pos_offset'])
 
     def tick(self):
         now = time.time()
@@ -48,19 +49,24 @@ class Body:
         for leg in self.legs:
             tip = leg.origin + leg.relative_rest_pos
             tip = tip.rotate(orientation, leg.origin)
-            tip += translation
+            tip -= translation
 
             if self._stance_mode:
                 if leg.order == 2:  # order 2 are front legs
                     stand_pos = self._stand_left_pos if leg.side == 'left' else self._stand_right_pos
                     tip += leg.stand_pos_offset + stand_pos
+                tip -= self._stand_pos_offset
             else:
                 # Translation anf gait are only applied in non-stand mode
-                tip += self.gait.get_tip_offset(leg)
+                tip -= self.gait.get_tip_offset(leg)
 
             leg.tick(tip - leg.origin)
 
-        self.tail.tick(- orientation.pitch * 2 - 60)
+        tail_pitch = orientation.pitch * -2 - 60
+        if self._stance_mode:
+            tail_pitch -= self._stand_pos_incline
+
+        self.tail.tick(tail_pitch)
 
     def set_stance_mode(self, stance_mode: bool):
         if self._stance_mode == stance_mode:
