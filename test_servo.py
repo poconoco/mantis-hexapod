@@ -17,8 +17,8 @@ def main():
         config = yaml.safe_load(config_file)
 
 
-    servo = Servo(pca_pool, config['legs'][5]['tibia']['servo'])
-    servo.move(90-15.2 - 73)
+    servo = Servo(pca_pool, config['legs'][0]['tibia']['servo'])
+    servo.move(90)
     sys.exit()
 
     #left_point1 = Point3D.from_dict(config['legs'][2]['relative_rest_pos'])

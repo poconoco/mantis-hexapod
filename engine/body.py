@@ -58,15 +58,14 @@ class Body:
                 tip -= self._stand_pos_offset
             else:
                 # Translation anf gait are only applied in non-stand mode
-                tip -= self.gait.get_tip_offset(leg)
+                tip += self.gait.get_tip_offset(leg)
 
             leg.tick(tip - leg.origin)
 
-        tail_pitch = orientation.pitch * -2 - 60
         if self._stance_mode:
-            tail_pitch -= self._stand_pos_incline
-
-        self.tail.tick(tail_pitch)
+            self.tail.tick(orientation.pitch)
+        else:
+            self.tail.tick(orientation.pitch * -2 - 60)
 
     def set_stance_mode(self, stance_mode: bool):
         if self._stance_mode == stance_mode:

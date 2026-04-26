@@ -11,7 +11,7 @@ body:
   translation_acceleration: 200
   tilt_speed_factor: 0.02
   stand_pos_incline: 45
-  stand_pos_offset: { x: 0, y: -100, z: 0 }
+  stand_pos_offset: { x: 0, y: -100, z: 30 }
 
 gait:
   steps_per_second: 0.5
@@ -176,7 +176,7 @@ legs:
     order: 2
     origin: { x: -38.70, y: 162.121, z: 0 }
     relative_rest_pos: { x: -150, y: 150, z: -120 }
-    stand_pos_offset: { x: 0, y: 100, z: 200 }
+    stand_pos_offset: { x: 0, y: 75, z: 200 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0
@@ -224,7 +224,7 @@ legs:
     order: 2
     origin: { x: 38.70, y: 162.121, z: 0 }
     relative_rest_pos: { x: 150, y: 150, z: -120 }
-    stand_pos_offset: { x: 0, y: 100, z: 200 }
+    stand_pos_offset: { x: 0, y: 75, z: 200 }
     coxa:
       angle1_for_perpendicular: 0
       angle2_for_horizontal: 0

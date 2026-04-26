@@ -78,7 +78,7 @@ def run_body(config: dict, pca_pool: PcaPool, visualizer: Visualizer):
                     body.set_stance_mode_front_positions(
                         Point3D(
                             rc.get_slider_left(),
-                            rc.get_x1(),
+                            - rc.get_x1(),
                             rc.get_y1(),
                         ) * stance_mode_front_legs_translation_scale,
                         Point3D(
